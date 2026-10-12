@@ -13,7 +13,10 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./studio.css">
+  <script src="./scheduler.js" defer></script>
   <script src="./app.js" defer></script>
+  <script src="./studio.js" defer></script>
 </head>
 <body data-theme="dark">
   <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -51,7 +54,9 @@
       <nav class="sidebar-nav" aria-label="Sections">
         <a href="#dashboard" class="side-link is-active"><svg class="icon"><use href="#ic-grid"/></svg><span>Dashboard</span><span class="nav-key">01</span></a>
         <a href="#planner" class="side-link"><svg class="icon"><use href="#ic-calendar"/></svg><span>Schedule</span><span class="nav-key">02</span></a>
-        <a href="#insights" class="side-link"><svg class="icon"><use href="#ic-trend"/></svg><span>Insights</span><span class="nav-key">03</span></a>
+        <a href="#weekly" class="side-link"><svg class="icon"><use href="#ic-calendar"/></svg><span>Weekly planner</span><span class="nav-key">03</span></a>
+        <a href="#projects" class="side-link"><svg class="icon"><use href="#ic-code"/></svg><span>Projects</span><span class="nav-key">04</span></a>
+        <a href="#insights" class="side-link"><svg class="icon"><use href="#ic-trend"/></svg><span>Insights</span><span class="nav-key">05</span></a>
       </nav>
       <div class="side-spacer"></div>
       <div class="side-inspo"><span class="little-stars">✳</span><h3>Build in your<br>own rhythm.</h3><p>A little focus goes a long way. Make today count.</p><div class="side-inspo-art" aria-hidden="true"><span class="art-circle one"></span><span class="art-circle two"></span><span class="art-line"></span></div></div>
@@ -93,6 +98,7 @@
             <div class="timer-title-wrap"><h2 id="timer-section-title">One task. <i>Total focus.</i></h2><p id="timer-task-description">Select a block from your schedule to begin.</p></div>
             <div class="timer-center"><svg class="timer-svg" viewBox="0 0 304 304" aria-hidden="true"><circle cx="152" cy="152" r="136" class="timer-track"/><circle cx="152" cy="152" r="136" class="timer-track-fine"/><circle cx="152" cy="152" r="136" class="timer-ring" id="timer-ring"/></svg><div class="timer-text"><span class="timer-overline" id="timer-label">TIME REMAINING</span><div class="timer-digits" id="timer-digits" role="timer" aria-label="Time remaining">00:00</div><span class="timer-under" id="timer-under">Choose your first task</span></div></div>
             <div class="timer-actions"><button class="button button-accent" id="timer-start" type="button" disabled><svg class="icon"><use id="start-icon" href="#ic-play"/></svg><span id="start-text">Start session</span></button><button class="icon-btn control-secondary" id="timer-reset" type="button" disabled title="Reset countdown" aria-label="Reset countdown"><svg class="icon"><use href="#ic-reset"/></svg></button><button class="icon-btn control-secondary" id="timer-finish" type="button" disabled title="Mark block complete" aria-label="Mark block complete"><svg class="icon"><use href="#ic-check"/></svg></button></div>
+            <button type="button" class="focus-expand" id="focus-open" disabled><svg class="icon"><use href="#ic-spark"/></svg> Enter immersive focus mode <span>↗</span></button>
             <div class="timer-foot"><span>✦</span><span>Progress, not perfection. One session at a time.</span><span>✦</span></div>
           </article>
           <div class="overview-column">
@@ -122,6 +128,50 @@
           </div>
         </section>
 
+
+        <section class="studio-section" id="weekly" aria-labelledby="weekly-heading">
+          <div class="section-heading">
+            <div><div class="eyebrow"><span class="asterisk">✳</span> THE BIGGER PICTURE</div><h2 id="weekly-heading">Your coding <em>week.</em></h2><p>Drag blocks between days, fine-tune durations, and plan what you'll build.</p></div>
+            <div class="planner-actions"><button type="button" class="button button-outline" id="week-prev" aria-label="Previous week">← Previous</button><button type="button" class="button button-light" id="week-now">This week</button><button type="button" class="button button-outline" id="week-next" aria-label="Next week">Next →</button></div>
+          </div>
+          <div class="week-shell">
+            <div class="week-toolbar"><div><span class="micro-label">WEEK AT A GLANCE</span><h3 id="week-label">Loading week…</h3></div><div class="week-actions"><span id="week-total">0 blocks</span><button class="button button-dark" type="button" id="week-add"><svg class="icon"><use href="#ic-plus"/></svg> Plan block</button></div></div>
+            <div class="week-scroll" tabindex="0" aria-label="Seven-day schedule. Scroll horizontally on smaller screens.">
+              <div class="week-grid" id="week-grid"></div>
+            </div>
+            <div class="week-footnote"><span>↔ Drag and drop to another day, or use the arrow controls on each block.</span><span>Click a session to load its focus timer.</span></div>
+          </div>
+        </section>
+
+        <section class="studio-section" id="projects" aria-labelledby="projects-heading">
+          <div class="section-heading">
+            <div><div class="eyebrow"><span class="asterisk">✳</span> BUILD WITH PURPOSE</div><h2 id="projects-heading">Your <em>projects.</em></h2><p>Give each coding session context and watch your projects move forward.</p></div>
+            <button class="button button-dark" id="project-add" type="button"><svg class="icon"><use href="#ic-plus"/></svg> New project</button>
+          </div>
+          <div class="project-filter" id="project-filter" role="group" aria-label="Filter projects"></div>
+          <div class="project-grid" id="project-grid"></div>
+          <div class="studio-utility-grid">
+            <article class="utility-card">
+              <span class="micro-label">YOUR DEVELOPER RECAP</span><h3>Show what you shipped.</h3>
+              <p>Turn your completed sessions and coding notes into a standup update.</p>
+              <div class="utility-actions"><button class="button button-outline" id="standup-copy" type="button">Copy daily standup</button><button class="button button-outline" id="journal-open" type="button">Open coding journal</button></div>
+            </article>
+            <article class="utility-card">
+              <span class="micro-label">BACKUP & PORTABILITY</span><h3>Your work, your data.</h3>
+              <p>Keep an offline copy of your projects, schedule and session notes.</p>
+              <div class="utility-actions"><button class="button button-outline" id="backup-export" type="button">Export backup</button><button class="button button-outline" id="backup-import" type="button">Import backup</button><input id="backup-file" type="file" accept=".json,application/json" hidden aria-label="Choose backup JSON file"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="studio-section" id="weekly-insights" aria-labelledby="weekly-insights-heading">
+          <div class="section-heading"><div><div class="eyebrow"><span class="asterisk">✳</span> FOLLOW YOUR FLOW</div><h2 id="weekly-insights-heading">The week in <em>numbers.</em></h2><p>Real tracked work—not just optimistic estimates.</p></div></div>
+          <div class="insights-board">
+            <div><span class="micro-label">FOCUSED MINUTES BY DAY</span><div class="insight-chart" id="insight-chart" aria-label="Time logged each day"></div></div>
+            <div class="insight-totals"><div><span>FOCUS THIS WEEK</span><strong id="insight-hours">0h 0m</strong></div><div><span>ACTIVE DAYS</span><strong id="insight-days">0 / 7</strong></div><div><span>YOUR MILESTONE</span><strong id="insight-badge">First steps</strong></div></div>
+          </div>
+        </section>
+
         <section class="bottom-grid" id="insights" aria-labelledby="insights-heading">
           <article class="quick-card"><div class="eyebrow"><span class="asterisk">✳</span> SKIP THE SETUP</div><h2>Quick-add a <em>session.</em></h2><p>Build a balanced day with one click. Times are fitted around existing blocks.</p><div class="quick-options">
             <button type="button" class="quick-option" data-quick="code"><span class="quick-icon code-icon"><svg class="icon"><use href="#ic-code"/></svg></span><span><strong>Deep coding</strong><small>50 minutes</small></span><svg class="icon quick-plus"><use href="#ic-plus"/></svg></button>
@@ -141,11 +191,51 @@
       <label for="block-title">What are you working on? <span>*</span></label><input id="block-title" name="title" maxlength="90" placeholder="e.g. Build authentication API" autocomplete="off" required>
       <div class="form-pair"><div><label for="block-type">Session type</label><select id="block-type" name="type"><option value="code">Coding / building</option><option value="debug">Debugging &amp; testing</option><option value="review">Code review</option><option value="learn">Learning &amp; research</option><option value="plan">Planning / admin</option><option value="break">Break / recharge</option></select></div><div><label for="block-start">Start time</label><input id="block-start" name="start" type="time" required></div></div>
       <div class="form-pair"><div><label for="block-duration">Duration (minutes)</label><input id="block-duration" name="duration" type="number" min="1" max="480" step="1" value="50" required></div><div><label for="block-date">Schedule date</label><input id="block-date" name="date" type="date" required></div></div>
+      <div class="advanced-fields"><div><label for="block-project">Project</label><select id="block-project" name="project"><option value="">No project</option></select></div><div><label for="block-repeat">Repeat schedule</label><select id="block-repeat" name="repeat"><option value="none">Just this once</option><option value="daily">Every day</option><option value="weekdays">Weekdays (Mon–Fri)</option><option value="weekly">Every week</option></select></div><div id="repeat-count-wrap" hidden><label for="block-repeat-count">Number of sessions</label><input type="number" min="2" max="12" value="4" id="block-repeat-count"><small class="field-hint">Up to 12 planned sessions. Recurrences are created as separate editable blocks.</small></div></div>
       <label for="block-note">Notes <span class="optional">(optional)</span></label><textarea id="block-note" name="note" rows="3" maxlength="250" placeholder="Define your task, goal, or next step"></textarea>
       <p id="form-error" class="form-error" role="alert" hidden></p>
       <div class="dialog-actions"><button type="button" class="button button-outline" id="dialog-cancel">Cancel</button><button type="submit" class="button button-accent" id="save-block">Save block <span>→</span></button></div>
     </form>
   </dialog>
+
+  <dialog class="block-dialog project-dialog" id="project-dialog" aria-labelledby="project-dialog-title">
+    <form id="project-form" method="dialog" novalidate>
+      <div class="dialog-head"><div><span class="eyebrow">YOUR NEXT BIG THING</span><h2 id="project-dialog-title">New project</h2></div><button type="button" class="icon-btn dialog-close" data-close-dialog="project-dialog" aria-label="Close"><svg class="icon"><use href="#ic-x"/></svg></button></div>
+      <label for="project-name">Project name <span>*</span></label><input id="project-name" name="name" maxlength="65" required placeholder="e.g. Restaurant Automation">
+      <label for="project-description">What are you building?</label><textarea id="project-description" maxlength="250" rows="3" placeholder="A short description…"></textarea>
+      <div class="form-pair"><div><label for="project-color">Project color</label><input type="color" id="project-color" value="#9e82d7"></div><div><label for="project-goal">Weekly focus goal (hours)</label><input type="number" min="1" max="80" id="project-goal" value="5"></div></div>
+      <label for="project-repo">GitHub repository <span class="optional">(optional, public issues)</span></label><input type="url" id="project-repo" placeholder="https://github.com/owner/repository">
+      <p class="form-error" id="project-error" role="alert" hidden></p>
+      <div class="dialog-actions"><button class="button button-outline" type="button" data-close-dialog="project-dialog">Cancel</button><button class="button button-accent" type="submit">Save project →</button></div>
+    </form>
+  </dialog>
+  <dialog id="immersive-dialog" class="immersive-dialog" aria-labelledby="immersive-task">
+    <div class="immersive-stage">
+      <div class="immersive-background" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="immersive-top"><span class="immersive-mark">✳ devtime.</span><span class="immersive-chip">FOCUS STUDIO</span><button type="button" class="icon-btn immerse-close" data-close-dialog="immersive-dialog" aria-label="Close focus mode"><svg class="icon"><use href="#ic-x"/></svg></button></div>
+      <div class="immersive-content"><span class="immersive-eyebrow">ONE TASK. ONE MOMENT.</span><h2 id="immersive-task">Your next big thing</h2><p id="immersive-project">Make some space to create.</p>
+        <div class="immersive-timer"><svg viewBox="0 0 300 300" aria-hidden="true"><circle cx="150" cy="150" r="133" class="immerse-track"/><circle cx="150" cy="150" r="133" id="immerse-ring"/></svg><div class="immersive-time"><span>TIME REMAINING</span><strong id="immerse-digits" role="timer">00:00</strong><small id="immerse-status">Ready when you are</small></div></div>
+        <div class="immersive-controls"><button type="button" class="button button-accent" id="immerse-toggle">Start focusing</button><button type="button" class="button button-glass" id="immerse-extend">+15 min</button><button type="button" class="button button-glass" id="immerse-complete">Finish & journal</button></div>
+        <div class="immersive-bottom"><button type="button" id="ambience-toggle" class="ambient-toggle">◖ ♪ ◗ &nbsp; Turn on gentle rain</button><span>SPACE → START / PAUSE &nbsp; · &nbsp; ESC → EXIT</span></div>
+      </div>
+    </div>
+  </dialog>
+  <dialog class="block-dialog journal-dialog" id="journal-dialog" aria-labelledby="journal-title">
+    <form id="journal-form" method="dialog">
+      <div class="dialog-head"><div><span class="eyebrow">CLOSE THE LOOP</span><h2 id="journal-title">Coding journal</h2></div><button type="button" class="icon-btn dialog-close" data-close-dialog="journal-dialog" aria-label="Close"><svg class="icon"><use href="#ic-x"/></svg></button></div>
+      <p class="journal-context" id="journal-context">Capture your progress.</p>
+      <label for="journal-done">What did you build or finish?</label><textarea id="journal-done" maxlength="1200" rows="3" placeholder="Implemented login endpoints, added tests…"></textarea>
+      <label for="journal-blocked">What slowed you down?</label><textarea id="journal-blocked" maxlength="800" rows="2" placeholder="Unexpected API errors, unclear requirements…"></textarea>
+      <label for="journal-next">Your next action</label><textarea id="journal-next" maxlength="800" rows="2" placeholder="Fix CORS settings and rerun tests…"></textarea>
+      <div class="dialog-actions"><button type="button" class="button button-outline" data-close-dialog="journal-dialog">Cancel</button><button class="button button-accent" type="submit">Save entry →</button></div>
+    </form>
+  </dialog>
+  <dialog id="issues-dialog" class="block-dialog issues-dialog" aria-labelledby="issues-title">
+    <div class="dialog-head"><div><span class="eyebrow">GITHUB · PUBLIC ISSUES</span><h2 id="issues-title">Plan issues</h2></div><button class="icon-btn" type="button" data-close-dialog="issues-dialog" aria-label="Close"><svg class="icon"><use href="#ic-x"/></svg></button></div>
+    <p class="journal-context" id="issues-explanation">Loading project issues…</p>
+    <div id="issue-results" class="issue-results" aria-live="polite"></div>
+  </dialog>
+
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
