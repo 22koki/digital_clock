@@ -31,6 +31,13 @@ const assert=require("node:assert/strict");
         await page.locator(".sidebar .side-link[href='#reminders']").click();
         assert.equal(await page.locator("#mobile-menu").getAttribute("aria-expanded"),"false");
       }
+      await page.locator("#v2-tasks").fill("Build login feature | 45 | code");
+      await page.locator("#v2-preview").click();
+      assert.equal(await page.locator("#v2-apply").isEnabled(),true);
+      await page.locator("#account-open").click();
+      assert.equal(await page.locator("#v2-account-dialog").isVisible(),true);
+      assert.equal(await page.locator("#v2-auth-form").isVisible(),false);
+      await page.locator("#v2-account-close").click();
       assert.deepEqual(errors,[],"Browser JS errors "+viewport.width+"px");
       console.log("PASS "+viewport.width+"px");
       await context.close();
