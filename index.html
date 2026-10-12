@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="./studio.css">
   <link rel="stylesheet" href="./logbook.css">
   <link rel="stylesheet" href="./templates.css">
+  <link rel="stylesheet" href="./report.css">
   <script src="./scheduler.js" defer></script>
   <script src="./app.js" defer></script>
   <script src="./rescue.js" defer></script>
@@ -25,6 +26,8 @@
   <script src="./logbook.js" defer></script>
   <script src="./templates-core.js" defer></script>
   <script src="./templates.js" defer></script>
+  <script src="./report-core.js" defer></script>
+  <script src="./report.js" defer></script>
 </head>
 <body data-theme="dark">
   <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -66,7 +69,8 @@
         <a href="#templates" class="side-link"><svg class="icon"><use href="#ic-calendar"/></svg><span>Day templates</span><span class="nav-key">04</span></a>
         <a href="#projects" class="side-link"><svg class="icon"><use href="#ic-code"/></svg><span>Projects</span><span class="nav-key">05</span></a>
         <a href="#journal" class="side-link"><svg class="icon"><use href="#ic-edit"/></svg><span>Coding journal</span><span class="nav-key">06</span></a>
-        <a href="#insights" class="side-link"><svg class="icon"><use href="#ic-trend"/></svg><span>Insights</span><span class="nav-key">07</span></a>
+        <a href="#report" class="side-link"><svg class="icon"><use href="#ic-trend"/></svg><span>Weekly report</span><span class="nav-key">07</span></a>
+        <a href="#insights" class="side-link"><svg class="icon"><use href="#ic-trend"/></svg><span>Insights</span><span class="nav-key">08</span></a>
       </nav>
       <div class="side-spacer"></div>
       <div class="side-inspo"><span class="little-stars">✳</span><h3>Build in your<br>own rhythm.</h3><p>A little focus goes a long way. Make today count.</p><div class="side-inspo-art" aria-hidden="true"><span class="art-circle one"></span><span class="art-circle two"></span><span class="art-line"></span></div></div>
@@ -241,6 +245,7 @@
           </div>
         </section>
 
+<section class="studio-section report-section" id="report" aria-labelledby="report-heading"><div class="section-heading"><div><div class="eyebrow"><span class="asterisk">✳</span> YOUR WORK, MADE VISIBLE</div><h2 id="report-heading">The week you <em>built.</em></h2><p>A beautiful, evidence-based recap of your coding hours, projects, journal and solved bugs.</p></div><div class="report-controls"><button type="button" class="button button-outline" id="report-prev">← Previous week</button><button type="button" class="button button-outline" id="report-this">This week</button><button type="button" class="button button-outline" id="report-next">Next →</button></div></div><div class="report-page"><div class="report-hero"><span class="report-eyebrow">✳ DEVTIME / WEEKLY EDITION</span><h3>Another week.<br><em>More progress.</em></h3><p id="report-week-label">Your week at a glance.</p><span class="report-edition">THE BUILDER'S REPORT ↗</span></div><div class="report-body"><div id="report-metrics" class="report-metrics"></div><div class="report-columns"><article class="report-pane"><div class="report-pane-heading"><span>01 / TIME & FLOW</span><h4>Where your hours went.</h4></div><div id="report-bars" class="report-bars"></div><p class="report-note">Tracked time reflects recorded coding sessions, not estimated productivity.</p></article><article class="report-pane"><div class="report-pane-heading"><span>02 / PROJECT MOMENTUM</span><h4>What moved forward.</h4></div><div id="report-projects"></div></article></div><div class="report-columns"><article class="report-pane"><div class="report-pane-heading"><span>03 / WORK SHIPPED</span><h4>Completed sessions.</h4></div><div id="report-completed" class="report-feed"></div></article><article class="report-pane"><div class="report-pane-heading"><span>04 / THE STORY BEHIND THE CODE</span><h4>Wins, notes & solved bugs.</h4></div><div id="report-highlights" class="report-feed"></div></article></div><div class="report-export"><div><strong>Make your progress shareable.</strong><p>Save a styled HTML report (print to PDF), download raw numbers or copy your weekly standup.</p></div><div class="report-export-actions"><button class="button button-dark" type="button" id="report-download">Download report</button><button class="button button-outline" type="button" id="report-csv">Export CSV</button><button class="button button-outline" type="button" id="report-copy">Copy summary</button></div></div></div></div></section>
         <section class="bottom-grid" id="insights" aria-labelledby="insights-heading">
           <article class="quick-card"><div class="eyebrow"><span class="asterisk">✳</span> SKIP THE SETUP</div><h2>Quick-add a <em>session.</em></h2><p>Build a balanced day with one click. Times are fitted around existing blocks.</p><div class="quick-options">
             <button type="button" class="quick-option" data-quick="code"><span class="quick-icon code-icon"><svg class="icon"><use href="#ic-code"/></svg></span><span><strong>Deep coding</strong><small>50 minutes</small></span><svg class="icon quick-plus"><use href="#ic-plus"/></svg></button>
