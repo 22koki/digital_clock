@@ -235,7 +235,7 @@
   });
   function downloadBlob(blob,name){const url=URL.createObjectURL(blob),a=elem("a");a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
   node("backup-export").addEventListener("click",()=>{
-    const copy={format:"devtime-backup-v2",exportedAt:new Date().toISOString(),state:{blocks:state.blocks,projects:state.projects,journal:state.journal}};
+    const copy={format:"devtime-backup-v2",exportedAt:new Date().toISOString(),state:{blocks:state.blocks,projects:state.projects,journal:state.journal,debugCases:state.debugCases||[]}};
     downloadBlob(new Blob([JSON.stringify(copy,null,2)],{type:"application/json"}),"devtime-backup-"+today()+".json");notify("Backup saved");
   });
   node("backup-import").addEventListener("click",()=>node("backup-file").click());
@@ -249,10 +249,11 @@
       if(!data.state.blocks.every(b=>b&&typeof b.id==="string"&&typeof b.title==="string"&&S.validate(b,[],[]).ok))throw Error("Backup contains invalid schedule blocks.");
       if(!data.state.projects.every(p=>p&&typeof p.id==="string"&&typeof p.name==="string"))throw Error("Invalid project data.");
       if(!data.state.journal.every(j=>j&&typeof j.blockId==="string"))throw Error("Invalid journal data.");
+      if(data.state.debugCases!==undefined&&(!Array.isArray(data.state.debugCases)||data.state.debugCases.length>2500||!data.state.debugCases.every(d=>d&&typeof d.id==="string"&&typeof d.title==="string"&&Array.isArray(d.attempts))))throw Error("Invalid debug investigations.");
       if(!confirm("Replace your current saved schedule, projects and journal with this backup? Export a backup first if needed."))return;
       if(state.timer?.running)pauseTimer();
-      state.blocks=data.state.blocks;state.projects=data.state.projects;state.journal=data.state.journal;
-      state.activeId=null;state.timer=null;state.selectedProject="all";save();render();notify("Backup imported");
+      state.blocks=data.state.blocks;state.projects=data.state.projects;state.journal=data.state.journal;state.debugCases=Array.isArray(data.state.debugCases)?data.state.debugCases:[];
+      state.activeId=null;state.timer=null;state.selectedProject="all";save();render();window.DevtimeLogbookUI?.render();notify("Backup imported");
     }catch(err){notify(err.message,true)}
     finally{event.target.value=""}
   });
