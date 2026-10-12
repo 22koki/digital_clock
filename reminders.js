@@ -105,14 +105,6 @@
     event.preventDefault();event.stopImmediatePropagation();
     $("reminders").scrollIntoView({behavior:"smooth"});
   },true);
-  // Delegate timer-completion alerts to the configured notification system.
-  // The existing timerComplete function calls playBeep and Notification after state transition.
-  const originalBeep=playBeep;
-  playBeep=function(){
-    if(prefs().sessionComplete)playChime();
-  };
-  const originalNotification=window.Notification;
-  // Do not replace browser global Notification: instead guard the existing completion path in app.js.
   window.DevtimeReminderUI={
     onComplete(block){if(prefs().sessionComplete)alertUser("Session complete",block?.title||"Your focus session is finished.",{session:true})},
     shouldNotifyCompletion(){return prefs().sessionComplete&&!R.quietNow(new Date(),prefs())},
