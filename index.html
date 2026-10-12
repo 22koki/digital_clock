@@ -16,12 +16,15 @@
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./studio.css">
   <link rel="stylesheet" href="./logbook.css">
+  <link rel="stylesheet" href="./templates.css">
   <script src="./scheduler.js" defer></script>
   <script src="./app.js" defer></script>
   <script src="./rescue.js" defer></script>
   <script src="./studio.js" defer></script>
   <script src="./logbook-core.js" defer></script>
   <script src="./logbook.js" defer></script>
+  <script src="./templates-core.js" defer></script>
+  <script src="./templates.js" defer></script>
 </head>
 <body data-theme="dark">
   <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -60,9 +63,10 @@
         <a href="#dashboard" class="side-link is-active"><svg class="icon"><use href="#ic-grid"/></svg><span>Dashboard</span><span class="nav-key">01</span></a>
         <a href="#planner" class="side-link"><svg class="icon"><use href="#ic-calendar"/></svg><span>Schedule</span><span class="nav-key">02</span></a>
         <a href="#weekly" class="side-link"><svg class="icon"><use href="#ic-calendar"/></svg><span>Weekly planner</span><span class="nav-key">03</span></a>
-        <a href="#projects" class="side-link"><svg class="icon"><use href="#ic-code"/></svg><span>Projects</span><span class="nav-key">04</span></a>
-        <a href="#journal" class="side-link"><svg class="icon"><use href="#ic-edit"/></svg><span>Coding journal</span><span class="nav-key">05</span></a>
-        <a href="#insights" class="side-link"><svg class="icon"><use href="#ic-trend"/></svg><span>Insights</span><span class="nav-key">06</span></a>
+        <a href="#templates" class="side-link"><svg class="icon"><use href="#ic-calendar"/></svg><span>Day templates</span><span class="nav-key">04</span></a>
+        <a href="#projects" class="side-link"><svg class="icon"><use href="#ic-code"/></svg><span>Projects</span><span class="nav-key">05</span></a>
+        <a href="#journal" class="side-link"><svg class="icon"><use href="#ic-edit"/></svg><span>Coding journal</span><span class="nav-key">06</span></a>
+        <a href="#insights" class="side-link"><svg class="icon"><use href="#ic-trend"/></svg><span>Insights</span><span class="nav-key">07</span></a>
       </nav>
       <div class="side-spacer"></div>
       <div class="side-inspo"><span class="little-stars">✳</span><h3>Build in your<br>own rhythm.</h3><p>A little focus goes a long way. Make today count.</p><div class="side-inspo-art" aria-hidden="true"><span class="art-circle one"></span><span class="art-circle two"></span><span class="art-line"></span></div></div>
@@ -147,6 +151,13 @@
             </div>
             <div class="week-footnote"><span>↔ Drag and drop to another day, or use the arrow controls on each block.</span><span>Click a session to load its focus timer.</span></div>
           </div>
+        </section>
+
+        <section class="studio-section templates-section" id="templates" aria-labelledby="templates-heading">
+          <div class="section-heading"><div><div class="eyebrow"><span class="asterisk">✳</span> MAKE ROOM FOR GREAT WORK</div><h2 id="templates-heading">Your day, <em>on repeat.</em></h2><p>Turn your favorite work routine into a ready-to-use coding schedule.</p></div><button class="button button-dark" type="button" id="template-save"><svg class="icon"><use href="#ic-plus"/></svg> Save current day</button></div>
+          <div class="template-lead"><div class="template-lead-copy"><span class="template-lead-kicker">✳ &nbsp; THE ROUTINE LIBRARY</span><h3>Your workflow,<br><em>beautifully structured.</em></h3><p>Pick a ready-made routine or create your own. Preview the blocks, choose a date and hit apply.</p></div><div class="template-art" aria-hidden="true"><div class="art-tile a">09:00 <span>✳ Deep work</span></div><div class="art-tile b">10:30 <span>◡ Take a break</span></div><div class="art-tile c">11:00 <span>⌘ Debug &amp; ship</span></div></div></div>
+          <div class="template-gallery" id="template-gallery" aria-live="polite"></div>
+          <p class="template-footnote">✦ Applying a template never silently deletes existing tasks. You choose how to handle any overlaps.</p>
         </section>
 
         <section class="studio-section" id="projects" aria-labelledby="projects-heading">
@@ -341,6 +352,26 @@
     <label for="rescue-minutes">Extra minutes</label><select id="rescue-minutes"><option value="10">10 minutes</option><option value="15" selected>15 minutes</option><option value="30">30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option></select>
     <div id="rescue-preview" class="issue-results" aria-live="polite"></div>
     <div class="dialog-actions"><button class="button button-outline" id="rescue-cancel" type="button">Cancel</button><button class="button button-accent" id="rescue-apply" type="button">Apply changes →</button></div>
+  </dialog>
+  <dialog class="block-dialog template-dialog" id="template-dialog" aria-labelledby="template-dialog-title">
+    <div class="dialog-head"><div><span class="eyebrow">YOUR DAILY BLUEPRINT</span><h2 id="template-dialog-title">Preview template</h2></div><button class="icon-btn" id="template-dialog-close" type="button" aria-label="Close preview"><svg class="icon"><use href="#ic-x"/></svg></button></div>
+    <p class="journal-context" id="template-description"></p>
+    <div class="template-form-pair"><div><label for="template-date">Starting date</label><input id="template-date" type="date" required></div><div><label for="template-start">First block begins</label><input id="template-start" type="time" required></div></div>
+    <label for="template-mode">Apply to</label><select id="template-mode"><option value="day">Selected day only</option><option value="weekdays">Monday–Friday of selected week</option></select>
+    <label for="template-project">Assign sessions to</label><select id="template-project"><option value="keep">Keep saved project links</option></select>
+    <label class="template-checkbox"><input type="checkbox" id="template-replace"> Replace existing blocks on selected date(s)</label>
+    <div class="template-preview-toolbar"><strong>Preview your schedule</strong><span id="template-preview-summary">—</span></div>
+    <div id="template-preview" class="template-preview" aria-live="polite"></div>
+    <p id="template-error" class="form-error" role="alert" hidden></p>
+    <div class="dialog-actions"><button type="button" class="button button-outline" id="template-cancel">Cancel</button><button type="button" class="button button-accent" id="template-apply">Add to schedule →</button></div>
+  </dialog>
+  <dialog class="block-dialog template-dialog" id="template-save-dialog" aria-labelledby="template-save-title">
+    <div class="dialog-head"><div><span class="eyebrow">CREATE YOUR OWN ROUTINE</span><h2 id="template-save-title">Save your coding day</h2></div><button class="icon-btn" type="button" id="template-save-close" aria-label="Close"><svg class="icon"><use href="#ic-x"/></svg></button></div>
+    <p id="template-save-context" class="journal-context"></p>
+    <label for="template-name">Name your routine</label><input id="template-name" maxlength="65" placeholder="e.g. Full-Stack Fridays" required>
+    <label for="template-notes">Short description</label><textarea id="template-notes" rows="2" maxlength="180" placeholder="The perfect mix of coding, testing and breaks…"></textarea>
+    <p id="template-save-error" class="form-error" role="alert" hidden></p>
+    <div class="dialog-actions"><button type="button" class="button button-outline" id="template-save-cancel">Cancel</button><button type="button" class="button button-accent" id="template-save-confirm">Save my template →</button></div>
   </dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
