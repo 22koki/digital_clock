@@ -28,6 +28,10 @@
 - Save any populated day as a custom reusable routine (up to 30 saved templates).
 - Backups include user-created templates for transfer between browsers.
 
+### 🧪 Responsive browser QA
+- GitHub Actions launches real Chromium smoke checks at 390px, 768px and 1440px, validating overflow, planner dialogs, navigation and reminder settings.
+- Run locally with `npm install --no-save playwright@1.56.1`, `npx playwright install chromium`, a local HTTP server at port 8000 and `node tests/browser-smoke.cjs`.
+
 ### 🔔 Customizable session reminders
 - Advance warnings (1, 5, 10, 15, 30 or 60 minutes), session start alerts and optional break reminders.
 - Quiet hours, sound preference and opt-in desktop notifications, plus a live upcoming-sessions list.
