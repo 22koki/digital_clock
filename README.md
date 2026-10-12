@@ -28,6 +28,11 @@
 - Save any populated day as a custom reusable routine (up to 30 saved templates).
 - Backups include user-created templates for transfer between browsers.
 
+### 🔔 Customizable session reminders
+- Advance warnings (1, 5, 10, 15, 30 or 60 minutes), session start alerts and optional break reminders.
+- Quiet hours, sound preference and opt-in desktop notifications, plus a live upcoming-sessions list.
+- In-app alerts remain available without OS notification permission. **The app must remain open:** these are not guaranteed background push notifications.
+
 ### 📊 Weekly Developer Report
 - A beautifully styled weekly recap with true logged focus time, completed work, active days, project momentum, dated bug resolutions and coding-journal highlights.
 - Browse earlier and upcoming weeks with the navigation controls.
