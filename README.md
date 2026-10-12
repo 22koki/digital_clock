@@ -1,73 +1,114 @@
-# Devtime ⏱️
+# Devtime ✳ — Developer Work Planner
 
-**Make time to build.** A developer-first coding schedule planner with a focus countdown, editable time blocks and daily progress analytics.
+> **Make time to build.** A developer-focused work scheduler combining project workspaces, weekly planning, a full-screen focus timer, meaningful time tracking and a coding journal.
 
-Built using **HTML, CSS and vanilla JavaScript**. Zero dependencies. Fully responsive, and ready for GitHub Pages.
+![Status](https://img.shields.io/badge/status-active%20development-b3a0ff)
+![Vanilla JS](https://img.shields.io/badge/stack-HTML%20%7C%20CSS%20%7C%20JavaScript-242037)
+![Tests](https://github.com/22koki/digital_clock/actions/workflows/tests.yml/badge.svg)
 
-## What it does
+## What's inside
 
-- **Plan your day:** Add, edit, complete, and remove coding blocks, debugging sessions, learning, reviews, planning and breaks.
-- **Focus timer:** Select any scheduled block, start/pause/reset a countdown and mark the block complete. Running time contributes to focused-minutes stats.
-- **Visual daily timeline:** See a compact snapshot of your day, planned focus hours, completed blocks and progress.
-- **Date navigation:** Move between days to prepare your work schedule in advance.
-- **Quick add:** Schedule a 50-minute coding session, 30-minute debug session or 10-minute break.
-- **Avoid overlaps:** Conflicting blocks and cross-midnight schedules are rejected.
-- **Export:** Save the selected date's plan as a CSV.
-- **Local persistence:** Schedules are stored in the browser using `localStorage`.
-- **Notifications:** Optional browser notifications and an audio cue when the active tab's timer finishes.
-- **Theme toggle:** Two visual themes.
+### 🗓 Weekly visual planner
+- A Monday-to-Sunday time-block view with drag-and-drop between days.
+- Arrow controls for keyboard/touch accessibility, plus an edit dialog.
+- Automatic conflict detection, duration limits and end-of-day validation.
+- Daily, weekday and weekly recurrence (up to 12 occurrences each time).
+- Existing day timeline, add/edit/delete controls and CSV schedule export.
 
-## Run locally
+### 🗂 Project workspaces
+- Create, edit or delete named projects, choose an accent color and set focus goals.
+- Attach any work session to a project, view completed work and total tracked time.
+- Filter weekly calendar cards by project.
+- Optionally link a public GitHub repository; import open *issues* as draft coding tasks via GitHub's unauthenticated public API. Requires an internet connection and is subject to API rate limits. Private repositories are not supported.
 
-Clone this repository and open `index.html` in a modern browser. No installation or build required.
+### ⏲ Focus studio
+- Start, pause, reset or complete the selected session.
+- Full-screen immersive timer with keyboard shortcut (Space).
+- A generated ambient rain sound (Web Audio API), no sound downloads required.
+- Extend a session by 15 minutes if the new duration does not overlap another block.
+- Optional browser notifications, and a timer-completion sound. The page needs to remain open for reliable reminders.
 
-Optional local server using Python:
+### 📓 Coding journal and reports
+- Capture completed work, blockers and what comes next per coding session.
+- Copy a daily standup to the clipboard, or download a text fallback.
+- View a 7-day logged-time bar chart, active days and milestone achievements.
+- Export all your work as a JSON backup, and restore it on another device.
 
-```bash
+### 📱 Offline and responsive
+- Mobile-friendly layouts and horizontally scrollable weekly planner.
+- Offline asset caching through a service worker on localhost and HTTPS.
+- An installable web-app manifest where browser support permits.
+- Browser-local data persistence without a backend or account.
+
+## Run the app
+
+No packages or build tools needed. Open \`index.html\` for the basic UI, or serve the project locally for offline / installable support:
+
+\`\`\`bash
 python -m http.server 8000
-```
+\`\`\`
 
-Then open http://localhost:8000.
+Then go to http://localhost:8000.
 
-On Windows with restricted PowerShell scripts, simply opening `index.html` is enough.
+For Windows machines with PowerShell npm execution restrictions, no npm installation is necessary. You can also use VS Code Live Server.
 
-## GitHub Pages
+## Deploy on GitHub Pages
 
-1. Open **Settings → Pages** in this GitHub repository.
-2. Set **Build and deployment → Deploy from a branch**.
-3. Select **main**, folder **/(root)**, and **Save**.
+On GitHub, open **Settings → Pages**, choose **Deploy from a branch**, select **main** and **/(root)**. When enabled, your website will be at:
 
-After deployment, the site will be available at:
+**https://22koki.github.io/digital_clock/**
 
-https://22koki.github.io/digital_clock/
+This is a suggested deployment URL; it will not work until Pages is enabled and deployed.
 
-## How a coding day works
+## Test
 
-1. Choose the work day in **Today's game plan**.
-2. Add blocks with a start time, a duration, task name and optional notes.
-3. Click the **play** button on a block to load its timer.
-4. Press **Start session**, or pause/reset when needed.
-5. Mark the block complete when finished. Check the updated stats.
+Requires Node.js 20+ only for automated testing, not for running the app.
 
-A starter schedule appears for the first visit. Edit the example blocks or use **Clear sample** to start fresh.
+\`\`\`bash
+node --check app.js
+node --check studio.js
+node --check scheduler.js
+node --test tests/*.test.cjs
+\`\`\`
 
-> **Data and timer note:** This MVP stores data *per browser/device*, not in a remote database, and browser notifications require permission. Timers are paused safely when you leave the page; keep the tab open while working. The tool does not sync with Google Calendar, Jira, or GitHub issues.
+Tests also run in GitHub Actions on pushes and pull requests.
 
-## Roadmap
+## How to use the coding planner
 
-- Task linking to GitHub issues and pull requests
-- Reusable daily/weekly templates
-- Optional local reminders before scheduled blocks
-- Weekly productivity insights and calendar export
-- Opt-in synchronization across devices
+1. Open **Projects → New project**. Name your project and optionally add a public GitHub repository URL.
+2. Use **Today's game plan** to schedule a block with duration, project and recurrence.
+3. Use **Weekly planner** to move it to a different day, or edit its start and duration.
+4. Click a block to load the countdown. Select **Enter immersive focus mode** to hide distractions.
+5. Complete your session, use the **Coding journal** to record what you accomplished, and share your standup.
+6. Review the insights for the week, then **Export backup** if you want to move your data between browsers.
 
-## Project structure
+On your first visit a sample day is created. Choose **Clear sample** in the day list when ready to start from scratch.
 
-```text
-index.html   # semantic UI and dialogs
-styles.css   # responsive dashboard styling
-app.js       # planner, timer, persistent state and exports
-favicon.svg  # simple project icon
-```
+## File layout
 
-Made for developers who want intentional time, fewer distractions, and more shipped work.
+| File | Purpose |
+| --- | --- |
+| \`index.html\` | Accessible semantic dashboard and dialogs |
+| \`styles.css\` | Base desktop/mobile styling |
+| \`studio.css\` | Calendar, project, analytics, focus and journal visual design |
+| \`app.js\` | Core daily planner, timer, CSV and local persistence |
+| \`scheduler.js\` | Standalone conflict, week, recurrence and project-metrics utilities |
+| \`studio.js\` | Studio feature integration and UI actions |
+| \`sw.js\` | Same-origin static offline asset caching |
+| \`manifest.webmanifest\` | PWA metadata |
+| \`tests/scheduler.test.cjs\` | Node-based scheduling regression tests |
+
+## Data/privacy limitations
+
+Everything in the schedule, journal and projects is stored on **this browser**, not on a cloud database. Clearing browser storage will delete the local work unless you've saved a backup. GitHub issue import accesses **public GitHub data only**, does not ask for a personal access token, and does not modify your GitHub repository. The timer uses the browser clock, and keeping the page open is recommended when you need alerts.
+
+## Upcoming ideas
+
+- Automatic break-aware rescheduling suggestions
+- Reusable week templates
+- Daily and weekly coding reports with additional filters
+- Optional signed-in, multi-device sync
+- GitHub OAuth integrations for private issues, commits and PRs
+- Better offline push notifications when a supported notification backend is available
+
+Designed with care for developers who want to focus less on clock-watching and more on shipping useful work.
