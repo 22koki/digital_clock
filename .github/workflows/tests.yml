@@ -25,6 +25,10 @@ jobs:
           node --check report.js
           node --check reminders-core.js
           node --check reminders.js
+          node --check cloud-core.js
+          node --check cloud-config.js
+          node --check smart-planner-core.js
+          node --check v2.js
       - name: Schedule engine tests
         run: node --test tests/*.test.cjs
 
