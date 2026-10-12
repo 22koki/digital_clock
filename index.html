@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0a0b18" />
+  <meta name="description" content="Chrono is a beautifully simple time dashboard with a live clock, world times, focus timer, stopwatch, and countdown." />
+  <meta property="og:title" content="Chrono — Time, beautifully spent." />
+  <meta property="og:description" content="A thoughtful little space for every second of your day." />
+  <title>Chrono — Time, beautifully spent.</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+  <script type="module" src="./src/app.js"></script>
+</head>
+<body data-theme="midnight">
+  <svg class="svg-sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 2" /></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3c3 3 4.5 6 4.5 9s-1.5 6-4.5 9c-3-3-4.5-6-4.5-9S9 6 12 3Z" /></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 2 1.8 7.2L21 11l-7.2 1.8L12 20l-1.8-7.2L3 11l7.2-1.8L12 2ZM19 17l.7 2.3L22 20l-2.3.7L19 23l-.7-2.3L16 20l2.3-.7L19 17Z" /></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" /></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5Z" /></symbol>
+    <symbol id="i-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14" /></symbol>
+    <symbol id="i-rotate" viewBox="0 0 24 24"><path d="M3 11a9 9 0 1 1 2.5 6.2M3 5v6h6" /></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-7-7 7 7-7 7" /></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" /><circle cx="12" cy="10" r="2.5" /></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18h1.3a2 2 0 0 0 1.5-3.4 1.6 1.6 0 0 1 1.1-2.6h2.2A3.9 3.9 0 0 0 22 11 9 9 0 0 0 12 3Z" /><circle cx="7" cy="11" r="1" /><circle cx="10" cy="7" r="1" /><circle cx="15" cy="7" r="1" /></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6 18 18M18 6 6 18" /></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 3h4m4 4-1 14H7L6 7m4 4v6m4-6v6" /></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6" /></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 8-3 8h18s-3-1-3-8ZM10 21h4" /></symbol>
+    <symbol id="i-volume" viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6l-5 4H4Zm13-3a7 7 0 0 1 0 10m2-13a11 11 0 0 1 0 16" /></symbol>
+    <symbol id="i-volume-off" viewBox="0 0 24 24"><path d="M4 10v4h4l5 4V6l-5 4H4Zm12 0 5 5m0-5-5 5" /></symbol>
+    <symbol id="i-stopwatch" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8" /><path d="M12 13l3-3M9 2h6m-3 0v3m7 1 2-2" /></symbol>
+    <symbol id="i-hourglass" viewBox="0 0 24 24"><path d="M6 3h12M6 21h12M8 3c0 5 4 6 4 9s-4 4-4 9m8-18c0 5-4 6-4 9s4 4 4 9" /></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" /></symbol>
+  </svg>
+
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <div class="app-shell">
+    <header class="site-header container">
+      <a class="brand" href="#now" aria-label="Chrono home">
+        <span class="brand-mark" aria-hidden="true"><span></span></span>
+        <span>chrono<span class="brand-period">.</span></span>
+      </a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <a class="active" href="#now">Overview</a>
+        <a href="#world">World clock</a>
+        <a href="#focus">Focus</a>
+        <a href="#tools">Tools</a>
+      </nav>
+      <div class="header-right">
+        <span class="header-date" id="header-date">YOUR TIME ZONE</span>
+        <label class="theme-picker">
+          <svg class="icon"><use href="#i-palette"></use></svg>
+          <span class="sr-only">Choose a color theme</span>
+          <select id="theme-select" aria-label="Choose a color theme">
+            <option value="midnight">Midnight</option>
+            <option value="aurora">Aurora</option>
+            <option value="daylight">Daylight</option>
+          </select>
+          <svg class="icon small"><use href="#i-chevron"></use></svg>
+        </label>
+      </div>
+    </header>
+
+    <main class="container" id="main-content">
+      <section class="hero" id="now" aria-labelledby="hero-title">
+        <div class="hero-content">
+          <div class="eyebrow"><span class="status-dot"></span> TIME IS ON YOUR SIDE</div>
+          <h1 id="hero-title">Make every<br /><em>moment count.</em></h1>
+          <p class="hero-description">One beautiful place to follow the hours, find your focus, and make the most of right now.</p>
+          <div class="hero-actions">
+            <label class="zone-picker">
+              <svg class="icon"><use href="#i-pin"></use></svg>
+              <span class="sr-only">Main clock time zone</span>
+              <select id="timezone-select" aria-label="Main clock time zone"></select>
+              <svg class="icon small"><use href="#i-chevron"></use></svg>
+            </label>
+            <button id="format-toggle" class="ghost-button" type="button" aria-label="Switch between 12 and 24 hour time" aria-pressed="false">24-hour</button>
+          </div>
+          <div class="hero-footnote"><svg class="icon"><use href="#i-spark"></use></svg> Wherever you are, this moment is yours.</div>
+        </div>
+        <div class="clock-stage" aria-label="Live digital clock">
+          <div class="stage-glow" aria-hidden="true"></div>
+          <div class="orbit orbit-one" aria-hidden="true"></div>
+          <div class="orbit orbit-two" aria-hidden="true"></div>
+          <div class="orbital-tick orbital-tick-one" aria-hidden="true"></div>
+          <div class="orbital-tick orbital-tick-two" aria-hidden="true"></div>
+          <div class="clock-face">
+            <div class="face-label"><span class="pulse-light"></span> LIVE LOCAL TIME</div>
+            <div class="face-time" aria-live="off">
+              <span id="clock-time" class="time-digits">--:--</span><span class="time-suffix"><span id="clock-seconds">--</span><span id="clock-ampm"></span></span>
+            </div>
+            <div id="clock-date" class="face-date">Finding your time…</div>
+            <div class="face-rule"></div>
+            <div class="face-bottom"><span id="face-zone">LOCAL TIME</span><span class="face-equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span></div>
+          </div>
+          <div class="floating-note note-top" aria-hidden="true">NOW <span>●</span></div>
+          <div class="floating-note note-bottom" aria-hidden="true">STAY PRESENT <span>↗</span></div>
+        </div>
+      </section>
+
+      <section class="insights" aria-label="Today's time insights">
+        <div class="insight"><span class="insight-label">TIME ZONE</span><div class="insight-value" id="timezone-offset">GMT —</div><span class="insight-detail" id="timezone-name">Your current location</span></div>
+        <div class="insight insight-progress"><div class="progress-head"><span class="insight-label">DAY IN MOTION</span><strong id="day-progress-value">0%</strong></div><div class="progress-track" role="progressbar" id="day-progress-track" aria-label="Day completed" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><div id="day-progress-fill"></div></div><span class="insight-detail">Every hour is a fresh beginning.</span></div>
+        <div class="insight"><span class="insight-label">UNTIL TOMORROW</span><div class="insight-value" id="time-to-midnight">—</div><span class="insight-detail">A little more time to make it count.</span></div>
+      </section>
+
+      <section class="content-section" id="world" aria-labelledby="world-heading">
+        <div class="section-top">
+          <div><span class="section-kicker">01 / CONNECTED MOMENTS</span><h2 id="world-heading">One world. <em>Many moments.</em></h2><p>Keep the people and places that matter just a glance away.</p></div>
+          <button class="outline-button" type="button" id="open-city-dialog"><svg class="icon"><use href="#i-plus"></use></svg> Add city</button>
+        </div>
+        <div class="world-grid" id="world-grid" aria-label="World clocks"></div>
+        <p class="section-hint">Times automatically account for daylight saving changes. Add or remove cities to make this space yours.</p>
+      </section>
+
+      <section class="content-section" id="focus" aria-labelledby="focus-heading">
+        <div class="section-top"><div><span class="section-kicker">02 / FIND YOUR FLOW</span><h2 id="focus-heading">Protect your <em>focus.</em></h2><p>A little structure makes room for big ideas.</p></div><span class="section-side-note"><svg class="icon"><use href="#i-spark"></use></svg> ONE THING AT A TIME</span></div>
+        <div class="focus-layout">
+          <div class="focus-card">
+            <div class="card-topline"><span class="card-eyebrow"><span class="tiny-flare"></span> FOCUS STUDIO</span><button class="icon-button" id="sound-toggle" type="button" aria-label="Mute timer sound" aria-pressed="false" title="Toggle timer sound"><svg class="icon"><use id="sound-icon" href="#i-volume"></use></svg></button></div>
+            <div class="mode-switch" role="group" aria-label="Focus timer mode"><button class="selected" data-focus-mode="focus" type="button" aria-pressed="true">Deep work</button><button data-focus-mode="short" type="button" aria-pressed="false">Short break</button><button data-focus-mode="long" type="button" aria-pressed="false">Long break</button></div>
+            <div class="timer-wheel"><svg class="timer-ring" viewBox="0 0 240 240" aria-hidden="true"><circle class="ring-track" cx="120" cy="120" r="105" /><circle id="focus-ring" class="ring-fill" cx="120" cy="120" r="105" /></svg><div class="timer-center"><span id="focus-mode-label">TIME TO FOCUS</span><div id="focus-display" class="focus-time" role="timer" aria-label="Focus timer">25:00</div><span id="focus-state">Ready when you are</span></div></div>
+            <div class="timer-controls"><button class="primary-button" id="focus-start" type="button"><svg class="icon"><use id="focus-start-icon" href="#i-play"></use></svg><span id="focus-start-label">Start focus</span></button><button class="round-button" id="focus-reset" type="button" aria-label="Reset focus timer" title="Reset timer"><svg class="icon"><use href="#i-rotate"></use></svg></button></div>
+          </div>
+          <div class="focus-story"><span class="story-index">A GENTLE REMINDER</span><h3>Great things<br />take <i>time.</i></h3><p>Turn down the noise. Choose a task, give it your attention, and enjoy the satisfaction of being fully here.</p><div class="focus-stats"><div class="stat-icon"><svg class="icon"><use href="#i-check"></use></svg></div><div><strong id="sessions-completed">0 sessions</strong><span>Deep work sessions completed today</span></div></div><div class="tip-box"><span class="tip-asterisk">✳</span><p>Try 25 minutes of undistracted work, followed by a 5-minute reset.</p></div></div>
+        </div>
+      </section>
+
+      <section class="content-section tools-section" id="tools" aria-labelledby="tools-heading">
+        <div class="section-top"><div><span class="section-kicker">03 / YOUR TIME TOOLKIT</span><h2 id="tools-heading">Tools for <em>every second.</em></h2><p>Time the little things. Celebrate the big ones.</p></div></div>
+        <div class="tools-grid">
+          <article class="tool-card" aria-labelledby="stopwatch-title">
+            <div class="tool-head"><span class="tool-icon"><svg class="icon"><use href="#i-stopwatch"></use></svg></span><span class="tool-counter">01 / 02</span></div>
+            <h3 id="stopwatch-title">Stopwatch</h3><p>Capture your personal best.</p>
+            <div class="tool-readout" id="stopwatch-display" role="timer" aria-label="Stopwatch elapsed time">00:00.00</div>
+            <div class="tool-actions"><button class="primary-button smaller" id="stopwatch-start" type="button"><svg class="icon"><use id="stopwatch-icon" href="#i-play"></use></svg><span id="stopwatch-start-label">Start</span></button><button class="secondary-button" id="stopwatch-lap" type="button" disabled>Lap</button><button class="icon-button framed" id="stopwatch-reset" type="button" aria-label="Reset stopwatch" title="Reset stopwatch"><svg class="icon"><use href="#i-rotate"></use></svg></button></div>
+            <ol id="lap-list" class="lap-list" aria-label="Stopwatch lap times"></ol>
+          </article>
+          <article class="tool-card" aria-labelledby="countdown-title">
+            <div class="tool-head"><span class="tool-icon"><svg class="icon"><use href="#i-hourglass"></use></svg></span><span class="tool-counter">02 / 02</span></div>
+            <h3 id="countdown-title">Countdown</h3><p>A little anticipation is a wonderful thing.</p>
+            <div class="tool-readout" id="countdown-display" role="timer" aria-label="Countdown remaining time">10:00</div>
+            <div class="countdown-presets" role="group" aria-label="Countdown presets"><button type="button" data-countdown-minutes="5">5 min</button><button type="button" class="chosen" data-countdown-minutes="10">10 min</button><button type="button" data-countdown-minutes="20">20 min</button></div>
+            <label class="custom-time-label" for="countdown-minutes">Or choose minutes <input id="countdown-minutes" type="number" min="1" max="999" value="10" inputmode="numeric" aria-describedby="countdown-help" /></label><span class="sr-only" id="countdown-help">Enter between 1 and 999 minutes while the timer is stopped.</span>
+            <div class="tool-actions"><button class="primary-button smaller" id="countdown-start" type="button"><svg class="icon"><use id="countdown-icon" href="#i-play"></use></svg><span id="countdown-start-label">Start</span></button><button class="icon-button framed" id="countdown-reset" type="button" aria-label="Reset countdown" title="Reset countdown"><svg class="icon"><use href="#i-rotate"></use></svg></button></div>
+          </article>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer container"><div class="footer-brand"><span class="brand-mark mini" aria-hidden="true"><span></span></span> chrono<span class="brand-period">.</span></div><span>Built for the moments that matter.</span><a href="#now">BACK TO TOP ↑</a></footer>
+  </div>
+
+  <dialog id="city-dialog" class="city-dialog" aria-labelledby="city-dialog-title">
+    <div class="dialog-top"><div><span class="section-kicker">EXPAND YOUR HORIZONS</span><h2 id="city-dialog-title">Add a world clock</h2></div><button class="icon-button framed" id="close-city-dialog" type="button" aria-label="Close dialog"><svg class="icon"><use href="#i-x"></use></svg></button></div>
+    <p>Stay connected to another corner of the world.</p>
+    <label class="dialog-field" for="city-select">Choose a city</label><select id="city-select"></select>
+    <div class="dialog-actions"><button type="button" class="secondary-button" id="cancel-city">Cancel</button><button type="button" class="primary-button" id="add-city"><svg class="icon"><use href="#i-plus"></use></svg> Add clock</button></div>
+  </dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
