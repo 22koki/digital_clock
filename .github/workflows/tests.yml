@@ -27,3 +27,13 @@ jobs:
           node --check reminders.js
       - name: Schedule engine tests
         run: node --test tests/*.test.cjs
+
+      - name: Browser integration dependencies
+        run: |
+          npm install --no-save playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Mobile, tablet and desktop smoke tests
+        run: |
+          python3 -m http.server 8000 --bind 127.0.0.1 > /tmp/devtime-http.log 2>&1 &
+          sleep 2
+          node tests/browser-smoke.cjs
