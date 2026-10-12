@@ -33,8 +33,13 @@
 - Extend a session by 15 minutes if the new duration does not overlap another block.
 - Optional browser notifications, and a timer-completion sound. The page needs to remain open for reliable reminders.
 
-### 📓 Coding journal and reports
+### 📓 Developer's notebook & Debug Rescue
+- A redesigned, illustrated journal with rich entry cards, search, mood tags, project links, reflections and an elegant writing dialog.
 - Capture completed work, blockers and what comes next per coding session.
+- Investigate bugs in the **Debug Rescue Desk**: symptoms, reproduction steps, hypotheses, chronological fix attempts and observations.
+- Track each issue through investigating, on-hold and resolved statuses, with a saved resolution summary.
+- Start a scheduled 15-minute debugging sprint and automatically load its focus timer.
+- Debug cases and their experiments are included in JSON backups.
 - Copy a daily standup to the clipboard, or download a text fallback.
 - View a 7-day logged-time bar chart, active days and milestone achievements.
 - Export all your work as a JSON backup, and restore it on another device.
@@ -114,6 +119,7 @@ Everything in the schedule, journal and projects is stored on **this browser**, 
 - Daily and weekly coding reports with additional filters
 - Optional signed-in, multi-device sync
 - GitHub OAuth integrations for private issues, commits and PRs
+- Attach code snippets and images to journal entries with offline storage
 - Better offline push notifications when a supported notification backend is available
 
 Designed with care for developers who want to focus less on clock-watching and more on shipping useful work.
