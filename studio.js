@@ -283,6 +283,42 @@
     if(wasRunning){state.timer.running=true;state.timer.startedAt=Date.now();state.timer.endsAt=Date.now()+state.timer.remaining*1000}
     save();render();notify("Added 15 minutes to this session");
   });
+  let rescuePlan=null;
+  function previewRescue(){
+    const b=active(),target=node("rescue-preview");target.replaceChildren();
+    rescuePlan=b?window.DevtimeRescue.preview(state.blocks,b.id,Number(node("rescue-minutes").value)):{ok:false,error:"Select a session first."};
+    if(!rescuePlan.ok){target.append(elem("p","form-error",rescuePlan.error));node("rescue-apply").disabled=true;return}
+    node("rescue-apply").disabled=false;
+    target.append(elem("p","journal-context","Proposed schedule for "+rescuePlan.day+":"));
+    rescuePlan.updates.forEach(u=>{
+      const line=elem("div","issue-row");
+      const info=elem("div");info.append(elem("strong","",u.title),elem("small","",u.originalStart+" → "+u.start+" · "+u.originalDuration+" → "+u.duration+" min"));
+      line.append(info);target.append(line);
+    });
+    if(rescuePlan.affected===0)target.append(elem("p","journal-context","No other sessions need to move."));
+  }
+  node("rescue-open").addEventListener("click",()=>{
+    if(!active())return notify("Select a session first.",true);
+    previewRescue();node("rescue-dialog").showModal();
+  });
+  node("rescue-minutes").addEventListener("change",previewRescue);
+  node("rescue-close").addEventListener("click",()=>node("rescue-dialog").close());
+  node("rescue-cancel").addEventListener("click",()=>node("rescue-dialog").close());
+  node("rescue-apply").addEventListener("click",()=>{
+    if(!rescuePlan?.ok)return;
+    const b=active(),wasRunning=!!state.timer?.running;
+    try{
+      // A running timer must be paused before changing its allotted time.
+      if(wasRunning)pauseTimer();
+      window.DevtimeRescue.apply(state.blocks,rescuePlan);
+      if(state.timer&&b){
+        state.timer.remaining+=rescuePlan.extraMinutes*60;
+        state.timer.total+=rescuePlan.extraMinutes*60;
+        if(wasRunning){state.timer.running=true;state.timer.startedAt=Date.now();state.timer.endsAt=Date.now()+state.timer.remaining*1000;}
+      }
+      save();render();node("rescue-dialog").close();notify("Schedule rescued: "+rescuePlan.affected+" upcoming blocks adjusted.");rescuePlan=null;
+    }catch(error){save();render();previewRescue();notify(error.message,true)}
+  });
   function ambientToggle(){
     if(ambienceOn){ambienceOn=false;if(ambience){ambience.osc.stop();ambience.ctx.close();ambience=null}node("ambience-toggle").textContent="◖ ♪ ◗  Turn on gentle rain";return}
     try{
