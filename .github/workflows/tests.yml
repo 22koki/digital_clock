@@ -21,5 +21,7 @@ jobs:
           node --check logbook.js
           node --check templates-core.js
           node --check templates.js
+          node --check report-core.js
+          node --check report.js
       - name: Schedule engine tests
         run: node --test tests/*.test.cjs
