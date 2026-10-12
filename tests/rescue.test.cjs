@@ -9,8 +9,8 @@ const blocks=()=>[
 ];
 test("extension shifts overlapping successors without moving unaffected blocks",()=>{
 const data=blocks(),plan=R.preview(data,"a",15);
-assert.equal(plan.ok,true);assert.equal(plan.affected,2);
-assert.deepEqual(plan.updates.map(u=>[u.id,u.start,u.duration]),[["a","09:00",65],["b","10:05",10],["c","10:20",40]]);
+assert.equal(plan.ok,true);assert.equal(plan.affected,1);
+assert.deepEqual(plan.updates.map(u=>[u.id,u.start,u.duration]),[["a","09:00",65],["b","10:05",10]]);
 R.apply(data,plan);assert.equal(data[1].start,"10:05");assert.equal(data[2].start,"10:20");assert.equal(data[3].start,"10:20");
 });
 test("preserves buffers until a shift is needed",()=>{
