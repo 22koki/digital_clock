@@ -17,5 +17,7 @@ jobs:
           node --check studio.js
           node --check sw.js
           node --check rescue.js
+          node --check logbook-core.js
+          node --check logbook.js
       - name: Schedule engine tests
         run: node --test tests/*.test.cjs
