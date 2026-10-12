@@ -15,10 +15,13 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css">
   <link rel="stylesheet" href="./studio.css">
+  <link rel="stylesheet" href="./logbook.css">
   <script src="./scheduler.js" defer></script>
   <script src="./app.js" defer></script>
   <script src="./rescue.js" defer></script>
   <script src="./studio.js" defer></script>
+  <script src="./logbook-core.js" defer></script>
+  <script src="./logbook.js" defer></script>
 </head>
 <body data-theme="dark">
   <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -58,7 +61,8 @@
         <a href="#planner" class="side-link"><svg class="icon"><use href="#ic-calendar"/></svg><span>Schedule</span><span class="nav-key">02</span></a>
         <a href="#weekly" class="side-link"><svg class="icon"><use href="#ic-calendar"/></svg><span>Weekly planner</span><span class="nav-key">03</span></a>
         <a href="#projects" class="side-link"><svg class="icon"><use href="#ic-code"/></svg><span>Projects</span><span class="nav-key">04</span></a>
-        <a href="#insights" class="side-link"><svg class="icon"><use href="#ic-trend"/></svg><span>Insights</span><span class="nav-key">05</span></a>
+        <a href="#journal" class="side-link"><svg class="icon"><use href="#ic-edit"/></svg><span>Coding journal</span><span class="nav-key">05</span></a>
+        <a href="#insights" class="side-link"><svg class="icon"><use href="#ic-trend"/></svg><span>Insights</span><span class="nav-key">06</span></a>
       </nav>
       <div class="side-spacer"></div>
       <div class="side-inspo"><span class="little-stars">✳</span><h3>Build in your<br>own rhythm.</h3><p>A little focus goes a long way. Make today count.</p><div class="side-inspo-art" aria-hidden="true"><span class="art-circle one"></span><span class="art-circle two"></span><span class="art-line"></span></div></div>
@@ -166,6 +170,58 @@
           </div>
         </section>
 
+        <section class="studio-section devlog-section" id="journal" aria-labelledby="logbook-heading">
+          <div class="logbook-cover">
+            <div class="cover-noise" aria-hidden="true"></div>
+            <div class="logbook-cover-content">
+              <div class="logbook-edition"><span class="edition-star">✳</span> THE DEVELOPER'S NOTEBOOK <span class="edition-number">VOL. 01 / DAILY NOTES</span></div>
+              <h2 id="logbook-heading">Write it down.<br><em>Build it better.</em></h2>
+              <p>Every bug, breakthrough and tiny victory belongs somewhere. Turn your coding sessions into a story worth looking back on.</p>
+              <div class="logbook-cover-actions">
+                <button type="button" class="button cover-primary" id="logbook-new"><svg class="icon"><use href="#ic-plus"/></svg> Write a journal entry</button>
+                <button type="button" class="button cover-secondary" id="debug-new"><span class="cover-bug">⌘</span> Start Debug Rescue</button>
+              </div>
+            </div>
+            <div class="logbook-art" aria-hidden="true">
+              <div class="notebook-spine"><span></span><span></span><span></span></div>
+              <div class="notebook-paper">
+                <div class="notebook-paper-top"><span><i class="paper-status"></i> DEVELOPER.LOG</span><span>● ● ●</span></div>
+                <div class="notebook-paper-title">today_i_learned.md</div>
+                <div class="notebook-code"><span class="line-num">01</span><span class="code-violet">#</span> Ship small, ship often.</div>
+                <div class="notebook-code"><span class="line-num">02</span><span class="code-peach">→</span> Built something new</div>
+                <div class="notebook-code"><span class="line-num">03</span><span class="code-mint">✓</span> Solved one more bug</div>
+                <div class="notebook-code"><span class="line-num">04</span><span class="code-violet">✳</span> Kept showing up</div>
+                <div class="notebook-line"></div><div class="notebook-line short"></div>
+              </div>
+              <span class="art-sticker sticker-one">✦ NEW IDEA</span><span class="art-sticker sticker-two">{ growth: true }</span>
+            </div>
+          </div>
+
+          <div class="logbook-metrics" aria-label="Developer logbook statistics">
+            <article class="log-metric"><span class="log-metric-icon purple-mark">✎</span><div><strong id="logbook-count">0</strong><span>Journal entries</span></div><small>STORIES WRITTEN</small></article>
+            <article class="log-metric"><span class="log-metric-icon mint-mark">✓</span><div><strong id="debug-resolved-count">0</strong><span>Bugs investigated & solved</span></div><small>PROBLEMS SOLVED</small></article>
+            <article class="log-metric"><span class="log-metric-icon peach-mark">↗</span><div><strong id="logbook-activity-count">0</strong><span>Recorded work sessions</span></div><small>SESSIONS TRACKED</small></article>
+          </div>
+
+          <div class="logbook-layout">
+            <div class="logbook-main">
+              <div class="logbook-heading-row"><div><span class="eyebrow"><span class="asterisk">✳</span> YOUR PROGRESS, IN WORDS</span><h3>Inside the <em>journal.</em></h3></div><span class="logbook-count-caption" id="journal-result-count">0 notes</span></div>
+              <div class="journal-tools"><label class="journal-search"><svg class="icon"><use href="#ic-spark"/></svg><input type="search" id="journal-search" placeholder="Search notes, projects or blockers..." aria-label="Search journal entries"></label><label class="journal-filter"><span class="sr-only">Filter journal entries</span><select id="journal-filter"><option value="all">All entries</option><option value="done">Achievements</option><option value="blocked">Blockers</option><option value="recent">Latest updates</option></select></label></div>
+              <div id="journal-feed" class="journal-feed" aria-live="polite"></div>
+            </div>
+            <aside class="journal-aside" aria-label="Journal inspiration">
+              <div class="reflection-card"><span class="reflection-icon">✷</span><div class="reflection-eyebrow">A MOMENT TO REFLECT</div><h4>Today's small win<br>is tomorrow's<br><em>big leap.</em></h4><p>Write down what you figured out—even if the code still needs work. Future you will be grateful.</p><div class="reflection-rule"></div><span class="reflection-signature">— A note to your future self</span></div>
+              <div class="journal-prompt-card"><span class="micro-label">NEED A PROMPT?</span><h4>Don't know what to write?</h4><div class="journal-prompt"><span>01</span> What did I build today?</div><div class="journal-prompt"><span>02</span> What surprised me?</div><div class="journal-prompt"><span>03</span> What will I try next?</div><button type="button" class="journal-prompt-action" id="journal-prompt-start">Start a reflection ↗</button></div>
+            </aside>
+          </div>
+
+          <div class="debug-desk" id="debug-desk">
+            <div class="debug-desk-header"><div><span class="eyebrow"><span class="asterisk">✳</span> DEBUGGING LAB / WORK IN PROGRESS</span><h3>The <em>rescue desk.</em></h3><p>Track a bug from the first clue to the fix, one experiment at a time.</p></div><button type="button" class="button button-dark" id="debug-new-secondary"><span>⌘</span> New investigation</button></div>
+            <div class="debug-filter" role="group" aria-label="Debug case status"><button type="button" data-debug-filter="all" class="selected">All cases</button><button type="button" data-debug-filter="investigating">Investigating</button><button type="button" data-debug-filter="paused">On hold</button><button type="button" data-debug-filter="resolved">Resolved</button></div>
+            <div id="debug-case-list" class="debug-case-list" aria-live="polite"></div>
+          </div>
+        </section>
+
         <section class="studio-section" id="weekly-insights" aria-labelledby="weekly-insights-heading">
           <div class="section-heading"><div><div class="eyebrow"><span class="asterisk">✳</span> FOLLOW YOUR FLOW</div><h2 id="weekly-insights-heading">The week in <em>numbers.</em></h2><p>Real tracked work—not just optimistic estimates.</p></div></div>
           <div class="insights-board">
@@ -217,21 +273,62 @@
       <div class="immersive-top"><span class="immersive-mark">✳ devtime.</span><span class="immersive-chip">FOCUS STUDIO</span><button type="button" class="icon-btn immerse-close" data-close-dialog="immersive-dialog" aria-label="Close focus mode"><svg class="icon"><use href="#ic-x"/></svg></button></div>
       <div class="immersive-content"><span class="immersive-eyebrow">ONE TASK. ONE MOMENT.</span><h2 id="immersive-task">Your next big thing</h2><p id="immersive-project">Make some space to create.</p>
         <div class="immersive-timer"><svg viewBox="0 0 300 300" aria-hidden="true"><circle cx="150" cy="150" r="133" class="immerse-track"/><circle cx="150" cy="150" r="133" id="immerse-ring"/></svg><div class="immersive-time"><span>TIME REMAINING</span><strong id="immerse-digits" role="timer">00:00</strong><small id="immerse-status">Ready when you are</small></div></div>
-        <div class="immersive-controls"><button type="button" class="button button-accent" id="immerse-toggle">Start focusing</button><button type="button" class="button button-glass" id="immerse-extend">+15 min</button><button type="button" class="button button-glass" id="rescue-open">Rescue schedule ↗</button><button type="button" class="button button-glass" id="immerse-complete">Finish & journal</button></div>
+        <div class="immersive-controls"><button type="button" class="button button-accent" id="immerse-toggle">Start focusing</button><button type="button" class="button button-glass" id="immerse-extend">+15 min</button><button type="button" class="button button-glass" id="rescue-open">Rescue schedule ↗</button><button type="button" class="button button-glass" id="immerse-debug">Debug rescue</button><button type="button" class="button button-glass" id="immerse-complete">Finish & journal</button></div>
         <div class="immersive-bottom"><button type="button" id="ambience-toggle" class="ambient-toggle">◖ ♪ ◗ &nbsp; Turn on gentle rain</button><span>SPACE → START / PAUSE &nbsp; · &nbsp; ESC → EXIT</span></div>
       </div>
     </div>
   </dialog>
-  <dialog class="block-dialog journal-dialog" id="journal-dialog" aria-labelledby="journal-title">
-    <form id="journal-form" method="dialog">
-      <div class="dialog-head"><div><span class="eyebrow">CLOSE THE LOOP</span><h2 id="journal-title">Coding journal</h2></div><button type="button" class="icon-btn dialog-close" data-close-dialog="journal-dialog" aria-label="Close"><svg class="icon"><use href="#ic-x"/></svg></button></div>
-      <p class="journal-context" id="journal-context">Capture your progress.</p>
-      <label for="journal-done">What did you build or finish?</label><textarea id="journal-done" maxlength="1200" rows="3" placeholder="Implemented login endpoints, added tests…"></textarea>
-      <label for="journal-blocked">What slowed you down?</label><textarea id="journal-blocked" maxlength="800" rows="2" placeholder="Unexpected API errors, unclear requirements…"></textarea>
-      <label for="journal-next">Your next action</label><textarea id="journal-next" maxlength="800" rows="2" placeholder="Fix CORS settings and rerun tests…"></textarea>
-      <div class="dialog-actions"><button type="button" class="button button-outline" data-close-dialog="journal-dialog">Cancel</button><button class="button button-accent" type="submit">Save entry →</button></div>
+  <dialog class="block-dialog journal-dialog logbook-entry-dialog" id="journal-dialog" aria-labelledby="journal-title">
+    <form id="journal-form" method="dialog" novalidate>
+      <div class="journal-form-banner"><div><span class="journal-form-eyebrow"><span class="tiny-ink">✳</span> A PAGE IN YOUR JOURNEY</span><h2 id="journal-title">A new chapter.</h2><p id="journal-context">Keep a record of what you built, learned and overcame.</p></div><button type="button" class="icon-btn journal-form-close" data-close-dialog="journal-dialog" aria-label="Close journal editor"><svg class="icon"><use href="#ic-x"/></svg></button></div>
+      <div class="journal-form-body">
+        <label for="journal-entry-title">Give this entry a title <span>*</span></label><input id="journal-entry-title" maxlength="100" required placeholder="e.g. Finally fixed the login flow">
+        <div class="form-pair"><div><label for="journal-entry-date">Date</label><input type="date" id="journal-entry-date" required></div><div><label for="journal-mood">Today's energy</label><select id="journal-mood"><option value="focused">✦ In the zone</option><option value="proud">✳ Feeling proud</option><option value="learning">◈ Learning something</option><option value="stuck">◇ Working through it</option></select></div></div>
+        <div class="form-pair"><div><label for="journal-link">Related coding session</label><select id="journal-link"><option value="">Personal reflection</option></select></div><div><label for="journal-project">Project</label><select id="journal-project"><option value="">Personal coding</option></select></div></div>
+        <div class="journal-writing-fields">
+          <div class="journal-writing-heading"><span class="writing-number">01</span><div><strong>The wins</strong><small>What did you build, fix, or discover?</small></div></div>
+          <label for="journal-done" class="sr-only">What did you build or learn?</label><textarea id="journal-done" maxlength="1200" rows="3" placeholder="Today I finally figured out…"></textarea>
+          <div class="journal-writing-heading"><span class="writing-number peach">02</span><div><strong>The messy middle</strong><small>Challenges, blockers, and unanswered questions</small></div></div>
+          <label for="journal-blocked" class="sr-only">Challenges and blockers</label><textarea id="journal-blocked" maxlength="800" rows="2" placeholder="I got stuck when…"></textarea>
+          <div class="journal-writing-heading"><span class="writing-number mint">03</span><div><strong>Note to future me</strong><small>The next thing you'll do</small></div></div>
+          <label for="journal-next" class="sr-only">Next steps</label><textarea id="journal-next" maxlength="800" rows="2" placeholder="Next session, I'll…"></textarea>
+        </div>
+        <p id="journal-error" class="form-error" role="alert" hidden></p>
+        <div class="dialog-actions"><button type="button" class="button button-outline" data-close-dialog="journal-dialog">Cancel</button><button class="button button-accent" type="submit"><svg class="icon"><use href="#ic-check"/></svg> Save to my journal</button></div>
+      </div>
     </form>
   </dialog>
+
+  <dialog class="block-dialog debugging-create-dialog" id="debug-create-dialog" aria-labelledby="debug-create-title">
+    <form id="debug-create-form" method="dialog" novalidate>
+      <div class="debug-dialog-banner"><div><span class="eyebrow">⚡ DEBUG RESCUE / NEW CASE</span><h2 id="debug-create-title">Let's find the bug.</h2><p>Define the problem clearly before chasing possible fixes.</p></div><button class="icon-btn" type="button" data-logbook-close="debug-create-dialog" aria-label="Close"><svg class="icon"><use href="#ic-x"/></svg></button></div>
+      <div class="debug-form-body">
+        <label for="debug-title">What's broken? <span>*</span></label><input id="debug-title" maxlength="100" placeholder="e.g. Login returns CORS error" required>
+        <label for="debug-project">Project</label><select id="debug-project"><option value="">Personal coding</option></select>
+        <label for="debug-symptom">What happens? <span>*</span></label><textarea id="debug-symptom" maxlength="1200" rows="3" placeholder="Describe the error, message or unexpected behavior…" required></textarea>
+        <label for="debug-repro">How can you reproduce it?</label><textarea id="debug-repro" maxlength="1000" rows="2" placeholder="1. Open login page…&#10;2. Submit the form…"></textarea>
+        <label for="debug-hypothesis">Your first hypothesis</label><textarea id="debug-hypothesis" maxlength="1000" rows="2" placeholder="I suspect the frontend API base URL…"></textarea>
+        <p id="debug-create-error" class="form-error" role="alert" hidden></p>
+        <div class="dialog-actions"><button class="button button-outline" type="button" data-logbook-close="debug-create-dialog">Cancel</button><button class="button button-accent" type="submit">Open investigation →</button></div>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="debug-detail-dialog" id="debug-detail-dialog" aria-labelledby="debug-detail-title">
+    <div class="debug-detail-frame">
+      <header class="debug-detail-header"><div><span class="eyebrow">THE RESCUE LAB / INVESTIGATION</span><h2 id="debug-detail-title">Investigation</h2><span id="debug-detail-context">Project · Today</span></div><button type="button" class="icon-btn" data-logbook-close="debug-detail-dialog" aria-label="Close investigation"><svg class="icon"><use href="#ic-x"/></svg></button></header>
+      <div class="debug-detail-scroll">
+        <div class="debug-detail-banner"><span id="debug-detail-status" class="case-status">Investigating</span><div class="debug-detail-actions"><button type="button" class="button button-dark" id="debug-start-timer"><svg class="icon"><use href="#ic-play"/></svg> Start 15-min investigation</button><button type="button" class="button button-outline" id="debug-toggle-status">Mark on hold</button></div></div>
+        <div class="debug-facts-grid"><div><span>01 / THE SYMPTOM</span><p id="debug-detail-symptom"></p></div><div><span>02 / REPRODUCTION STEPS</span><p id="debug-detail-repro"></p></div><div><span>03 / MY HYPOTHESIS</span><p id="debug-detail-hypothesis"></p></div></div>
+        <div class="debug-attempts-top"><div><span class="eyebrow">THE EXPERIMENT LOG</span><h3>What have you tried?</h3></div><span class="attempt-total" id="debug-attempt-total">0 attempts</span></div>
+        <div id="debug-attempt-list" class="debug-attempt-list"></div>
+        <form id="debug-attempt-form" class="debug-attempt-form" novalidate><label for="debug-attempt-action">Next thing to try <span>*</span></label><textarea id="debug-attempt-action" rows="2" maxlength="900" placeholder="e.g. Add the frontend URL to CORS_ALLOWED_ORIGINS…" required></textarea><div class="form-pair"><div><label for="debug-attempt-outcome">What happened?</label><select id="debug-attempt-outcome"><option value="failed">Still broken</option><option value="partial">Partially helped</option><option value="worked">That worked!</option></select></div><div><label for="debug-attempt-observation">Observation</label><input id="debug-attempt-observation" maxlength="500" placeholder="New error or a clue…"></div></div><p id="debug-attempt-error" class="form-error" role="alert" hidden></p><button type="submit" class="button button-accent"><svg class="icon"><use href="#ic-plus"/></svg> Log experiment</button></form>
+        <form id="debug-resolution-form" class="debug-resolution-form" novalidate><div class="debug-resolution-head"><span>✳</span><div><strong>Close the loop</strong><small>Capture the final fix so you won't have to solve it twice.</small></div></div><label for="debug-resolution">How did you solve it?</label><textarea id="debug-resolution" maxlength="1200" rows="2" placeholder="The working fix was…" required></textarea><p id="debug-resolution-error" role="alert" class="form-error" hidden></p><button type="submit" class="button button-dark" id="debug-resolve">Mark as resolved ✓</button></form>
+        <button type="button" class="debug-delete" id="debug-delete-case"><svg class="icon"><use href="#ic-trash"/></svg> Delete this investigation</button>
+      </div>
+    </div>
+  </dialog>
+
   <dialog id="issues-dialog" class="block-dialog issues-dialog" aria-labelledby="issues-title">
     <div class="dialog-head"><div><span class="eyebrow">GITHUB · PUBLIC ISSUES</span><h2 id="issues-title">Plan issues</h2></div><button class="icon-btn" type="button" data-close-dialog="issues-dialog" aria-label="Close"><svg class="icon"><use href="#ic-x"/></svg></button></div>
     <p class="journal-context" id="issues-explanation">Loading project issues…</p>
