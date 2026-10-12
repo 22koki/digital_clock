@@ -94,6 +94,7 @@ function nodeFocus(){if($("focus-open")&&!$("focus-open").disabled)$("focus-open
 $("logbook-new").addEventListener("click",()=>openEntry());$("journal-prompt-start").addEventListener("click",()=>openEntry());
 for(const id of ["debug-new","debug-new-secondary","immerse-debug"])$(id).addEventListener("click",()=>{if($("immersive-dialog").open)$("immersive-dialog").close();openCreateCase()});
 $("journal-open").addEventListener("click",event=>{event.preventDefault();event.stopImmediatePropagation();openEntry(null,state.activeId)},true);
+$("immerse-complete").addEventListener("click",event=>{event.preventDefault();event.stopImmediatePropagation();const blockId=state.activeId;$("timer-finish").click();$("immersive-dialog").close();openEntry(null,blockId)},true);
 $("journal-form").addEventListener("submit",event=>{
 event.preventDefault();event.stopImmediatePropagation();
 try{const data={title:$("journal-entry-title").value,date:$("journal-entry-date").value,blockId:$("journal-link").value,projectId:$("journal-project").value,mood:$("journal-mood").value,done:$("journal-done").value,blocked:$("journal-blocked").value,next:$("journal-next").value};if(!S.dateParts(data.date))throw Error("Please choose a valid date.");
