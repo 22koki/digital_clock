@@ -253,7 +253,7 @@
       if(!confirm("Replace your current saved schedule, projects and journal with this backup? Export a backup first if needed."))return;
       if(state.timer?.running)pauseTimer();
       state.blocks=data.state.blocks;state.projects=data.state.projects;state.journal=data.state.journal;state.debugCases=Array.isArray(data.state.debugCases)?data.state.debugCases:[];state.templates=Array.isArray(data.state.templates)?data.state.templates.filter(t=>window.DevtimeTemplates?.validateTemplate(t).ok&&t.custom):[];
-      state.activeId=null;state.timer=null;state.selectedProject="all";save();render();window.DevtimeLogbookUI?.render();window.DevtimeTemplateUI?.paint();notify("Backup imported");
+      state.activeId=null;state.timer=null;state.selectedProject="all";save();render();window.DevtimeLogbookUI?.render();window.DevtimeTemplateUI?.paint();window.DevtimeReportUI?.render();notify("Backup imported");
     }catch(err){notify(err.message,true)}
     finally{event.target.value=""}
   });
