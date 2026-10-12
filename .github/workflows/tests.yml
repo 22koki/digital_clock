@@ -23,5 +23,7 @@ jobs:
           node --check templates.js
           node --check report-core.js
           node --check report.js
+          node --check reminders-core.js
+          node --check reminders.js
       - name: Schedule engine tests
         run: node --test tests/*.test.cjs
