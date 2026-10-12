@@ -1,5 +1,5 @@
-const CACHE="devtime-studio-v2";
-const ASSETS=["./","./index.html","./styles.css","./studio.css","./scheduler.js","./app.js","./studio.js","./favicon.svg"];
+const CACHE="devtime-studio-v3";
+const ASSETS=["./","./index.html","./styles.css","./studio.css","./scheduler.js","./app.js","./studio.js","./rescue.js","./favicon.svg"];
 self.addEventListener("install",event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()))});
 self.addEventListener("activate",event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
 self.addEventListener("fetch",event=>{
