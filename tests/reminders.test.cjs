@@ -1,0 +1,10 @@
+const test=require("node:test"),assert=require("node:assert/strict"),R=require("../reminders-core.js");
+const now=new Date(2026,9,12,9,50,0);
+const block={id:"block1",date:"2026-10-12",start:"10:00",title:"Build an API",duration:50,type:"code",done:false};
+test("scheduled reminders account for local date and upcoming window",()=>{const alerts=R.upcomingEvents([block],now,{leadMinutes:10});assert.equal(alerts.length,1);assert.equal(alerts[0].kind,"upcoming")});
+test("reminder history prevents repeat notifications",()=>{const first=R.upcomingEvents([block],now,{leadMinutes:10});const history={[first[0].key]:now.getTime()};assert.equal(R.upcomingEvents([block],new Date(2026,9,12,9,55),{leadMinutes:10},history).length,0)});
+test("session start alerts do not fire late or early",()=>{assert.equal(R.upcomingEvents([block],new Date(2026,9,12,10,0,20),{upcoming:false}).length,1);assert.equal(R.upcomingEvents([block],new Date(2026,9,12,10,2),{upcoming:false}).length,0)});
+test("weekday crossing quiet window works",()=>{assert.equal(R.quietNow(new Date(2026,9,12,22,0),{quiet:true,quietFrom:"21:00",quietUntil:"07:00"}),true);assert.equal(R.quietNow(new Date(2026,9,12,11,0),{quiet:true,quietFrom:"21:00",quietUntil:"07:00"}),false)});
+test("breaks and finished tasks respect preferences",()=>{const breaks=[{...block,type:"break"},{...block,id:"done",done:true}];assert.equal(R.upcomingEvents(breaks,now,{includeBreaks:false}).length,0)});
+test("settings reject unknown reminder lead intervals",()=>{assert.equal(R.normalize({leadMinutes:999}).leadMinutes,10)});
+test("only imminent future blocks appear in upcoming list",()=>{const result=R.nextEvents([block,{...block,id:"other",date:"2026-10-11"}],now,{},4);assert.equal(result.length,1);assert.equal(result[0].block.id,"block1")});
