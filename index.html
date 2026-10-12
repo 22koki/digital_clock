@@ -19,6 +19,7 @@
   <link rel="stylesheet" href="./templates.css">
   <link rel="stylesheet" href="./report.css">
   <link rel="stylesheet" href="./reminders.css">
+  <link rel="stylesheet" href="./v2.css">
   <script src="./scheduler.js" defer></script>
   <script src="./app.js" defer></script>
   <script src="./rescue.js" defer></script>
@@ -31,6 +32,10 @@
   <script src="./report.js" defer></script>
   <script src="./reminders-core.js" defer></script>
   <script src="./reminders.js" defer></script>
+  <script src="./cloud-config.js" defer></script>
+  <script src="./cloud-core.js" defer></script>
+  <script src="./smart-planner-core.js" defer></script>
+  <script src="./v2.js" defer></script>
 </head>
 <body data-theme="dark">
   <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -69,6 +74,7 @@
         <a href="#dashboard" class="side-link is-active"><svg class="icon"><use href="#ic-grid"/></svg><span>Dashboard</span><span class="nav-key">01</span></a>
         <a href="#planner" class="side-link"><svg class="icon"><use href="#ic-calendar"/></svg><span>Schedule</span><span class="nav-key">02</span></a>
         <a href="#weekly" class="side-link"><svg class="icon"><use href="#ic-calendar"/></svg><span>Weekly planner</span><span class="nav-key">03</span></a>
+        <a href="#smart-planner" class="side-link"><svg class="icon"><use href="#ic-spark"/></svg><span>Smart planner</span></a>
         <a href="#templates" class="side-link"><svg class="icon"><use href="#ic-calendar"/></svg><span>Day templates</span><span class="nav-key">04</span></a>
         <a href="#projects" class="side-link"><svg class="icon"><use href="#ic-code"/></svg><span>Projects</span><span class="nav-key">05</span></a>
         <a href="#journal" class="side-link"><svg class="icon"><use href="#ic-edit"/></svg><span>Coding journal</span><span class="nav-key">06</span></a>
@@ -85,7 +91,7 @@
       <header class="topbar">
         <button class="mobile-brand" id="mobile-menu" aria-label="Toggle menu" aria-expanded="false" type="button"><svg class="icon"><use href="#ic-menu"/></svg><strong>devtime<span class="brand-period">.</span></strong></button>
         <div class="breadcrumb"><span>WORKSPACE</span><span class="crumb-sep">/</span><strong>Daily dashboard</strong></div>
-        <div class="topbar-right">
+        <div class="topbar-right"><button class="account-chip" id="account-open" type="button" aria-label="Open account and cloud sync settings">☁ <span id="account-status">Local only</span></button>
           <span class="live-badge"><span class="live-dot"></span><span id="live-clock">--:--:--</span></span>
           <button class="icon-btn top-icon" type="button" id="notification-button" title="Open reminder preferences" aria-label="Open reminder preferences"><svg class="icon"><use href="#ic-bell"/></svg></button>
           <button class="icon-btn top-icon" type="button" id="theme-button" title="Switch color theme" aria-label="Switch color theme"><svg class="icon"><use href="#ic-moon"/></svg></button>
@@ -161,6 +167,9 @@
           </div>
         </section>
 
+<section class="studio-section v2-section" id="smart-planner" aria-labelledby="v2-planner-heading">
+  <div class="section-heading"><div><div class="eyebrow">✳ &nbsp; DEVTIME 2.0 / YOUR NEXT MOVE</div><h2 id="v2-planner-heading">Plan your day <em>smarter.</em></h2><p>Turn a task list into a balanced coding schedule that respects existing blocks.</p></div></div>
+  <div class="v2-planner-grid"><div class="v2-panel"><span class="micro-label">01 / WHAT NEEDS DOING?</span><label for="v2-tasks">Coding tasks · one per line</label><textarea id="v2-tasks" rows="7" placeholder="Build login API | 60 | code&#10;Fix failing tests | 45 | debug&#10;Review pull requests | 30 | review"></textarea><p class="v2-help">Format: Task name | minutes | code, debug, review, learn or plan. Duration and category are optional.</p><div class="v2-settings"><label>First date <input type="date" id="v2-date"></label><label>Workdays <select id="v2-days"><option>1</option><option>2</option><option>3</option><option>5</option><option>10</option></select></label><label>Start <input type="time" id="v2-start" value="09:00"></label><label>End <input type="time" id="v2-end" value="17:00"></label><label>Break every <select id="v2-break-every"><option value="60">60 min</option><option value="90" selected>90 min</option><option value="120">120 min</option></select></label><label>Break length <select id="v2-break-length"><option value="0">None</option><option value="5">5 min</option><option value="10" selected>10 min</option><option value="15">15 min</option></select></label></div><button type="button" class="button button-dark v2-full" id="v2-preview">✳ Generate my schedule</button></div><div class="v2-panel v2-preview"><span class="micro-label">02 / YOUR PROPOSED FLOW</span><h3>Give your ideas some room.</h3><div id="v2-result" class="v2-result" aria-live="polite"><p>Add your coding tasks and generate a plan to see the time blocks here.</p></div><button class="button button-accent v2-full" type="button" id="v2-apply" disabled>Add planned sessions →</button><p class="v2-help">No existing tasks are deleted or edited. Review your preview before adding anything.</p></div></div></section>
         <section class="studio-section templates-section" id="templates" aria-labelledby="templates-heading">
           <div class="section-heading"><div><div class="eyebrow"><span class="asterisk">✳</span> MAKE ROOM FOR GREAT WORK</div><h2 id="templates-heading">Your day, <em>on repeat.</em></h2><p>Turn your favorite work routine into a ready-to-use coding schedule.</p></div><button class="button button-dark" type="button" id="template-save"><svg class="icon"><use href="#ic-plus"/></svg> Save current day</button></div>
           <div class="template-lead"><div class="template-lead-copy"><span class="template-lead-kicker">✳ &nbsp; THE ROUTINE LIBRARY</span><h3>Your workflow,<br><em>beautifully structured.</em></h3><p>Pick a ready-made routine or create your own. Preview the blocks, choose a date and hit apply.</p></div><div class="template-art" aria-hidden="true"><div class="art-tile a">09:00 <span>✳ Deep work</span></div><div class="art-tile b">10:30 <span>◡ Take a break</span></div><div class="art-tile c">11:00 <span>⌘ Debug &amp; ship</span></div></div></div>
@@ -432,6 +441,10 @@
     <p id="template-save-error" class="form-error" role="alert" hidden></p>
     <div class="dialog-actions"><button type="button" class="button button-outline" id="template-save-cancel">Cancel</button><button type="button" class="button button-accent" id="template-save-confirm">Save my template →</button></div>
   </dialog>
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+<dialog id="v2-account-dialog" class="block-dialog v2-account-dialog" aria-labelledby="v2-account-title">
+<div class="dialog-head"><div><span class="eyebrow">DEVTIME 2.0 / YOUR DATA</span><h2 id="v2-account-title">Your workspace, your rules.</h2></div><button type="button" class="icon-btn" id="v2-account-close" aria-label="Close account dialog">✕</button></div>
+<p id="v2-cloud-message" class="v2-help"></p>
+<form id="v2-auth-form"><label for="v2-email">Email</label><input type="email" id="v2-email" autocomplete="email" required><label for="v2-password">Password</label><input type="password" id="v2-password" autocomplete="current-password" minlength="6" required><div class="v2-account-actions"><button type="submit" class="button button-dark" data-auth-action="signin">Sign in</button><button type="button" class="button button-outline" id="v2-signup">Create account</button></div></form>
+<div id="v2-cloud-controls" hidden><div class="v2-cloud-identity"><strong id="v2-cloud-email"></strong><span id="v2-sync-status">Not synced yet</span></div><p class="v2-help">Choose when to upload or download. Devtime will not silently overwrite saved work.</p><div class="v2-account-actions"><button class="button button-accent" id="v2-upload" type="button">Upload local workspace</button><button class="button button-outline" id="v2-download" type="button">Download cloud workspace</button><button class="button button-outline" id="v2-signout" type="button">Sign out</button></div></div><p id="v2-cloud-error" role="alert" class="form-error" hidden></p></dialog>  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
