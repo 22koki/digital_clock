@@ -20,6 +20,14 @@
 - Upcoming blocks shift only when needed, preserving existing gaps and preventing overlaps.
 - Review every change before applying. The engine refuses changes that exceed midnight or the per-session duration limit.
 
+### 🗓 Reusable coding-day templates
+- Four built-in routines: **Deep Work Day**, **Debug & Ship**, **Learn & Build** and **Balanced Builder**.
+- Preview timing and choose the start date and first session start time.
+- Apply to a single day or all weekdays in a selected week.
+- Conflict-safe by default: blocks are never overwritten without explicit confirmation.
+- Save any populated day as a custom reusable routine (up to 30 saved templates).
+- Backups include user-created templates for transfer between browsers.
+
 ### 🗂 Project workspaces
 - Create, edit or delete named projects, choose an accent color and set focus goals.
 - Attach any work session to a project, view completed work and total tracked time.
