@@ -9,6 +9,7 @@ const assert=require("node:assert/strict");
       page.on("pageerror",e=>errors.push(e.message));
       await page.goto("http://127.0.0.1:8000/",{waitUntil:"load"});
       await page.waitForSelector("#reminder-upcoming");
+      if(await page.locator("#v2-welcome").isVisible())await page.locator("#v2-welcome-skip").click();
       await page.waitForSelector("#report-metrics .report-metric");
       const layout=await page.evaluate(()=>({width:document.documentElement.clientWidth,scroll:document.documentElement.scrollWidth}));
       assert.ok(layout.scroll<=layout.width+3,"Horizontal overflow "+viewport.width+"px "+JSON.stringify(layout));
