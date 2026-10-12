@@ -152,7 +152,7 @@
     const projects=state.selectedProject==="all"?state.projects:state.projects.filter(p=>p.id===state.selectedProject);
     if(!projects.length){const d=elem("div","project-empty");d.append(elem("strong","","Give your ideas a home."),elem("p","","Create a project, then link coding sessions to it."));grid.append(d);return}
     projects.forEach(p=>{
-      const stats=S.projectStats(p.id,state.blocks),goalSeconds=p.goal*3600,percentage=Math.min(100,Math.round(stats.loggedSeconds/goalSeconds*100));
+      const stats=S.projectStats(p.id,state.blocks),goalSeconds=p.goal*3600,weeklySeconds=state.blocks.filter(b=>b.projectId===p.id&&weekRange().includes(b.date)).reduce((sum,b)=>sum+Number(b.secondsLogged||0),0),percentage=Math.min(100,Math.round(weeklySeconds/goalSeconds*100));
       const card=elem("article","project-card");card.style.setProperty("--project-color",validHex(p.color));
       const head=elem("div","project-card-top");head.append(elem("span","project-marker",p.name.slice(0,2).toUpperCase()),elem("span","micro-label",percentage+"% of weekly goal"));
       card.append(head,elem("h3","",p.name),elem("p","",p.description||"Where ideas become working code."));
