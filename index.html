@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="./studio.css">
   <script src="./scheduler.js" defer></script>
   <script src="./app.js" defer></script>
+  <script src="./rescue.js" defer></script>
   <script src="./studio.js" defer></script>
 </head>
 <body data-theme="dark">
@@ -216,7 +217,7 @@
       <div class="immersive-top"><span class="immersive-mark">✳ devtime.</span><span class="immersive-chip">FOCUS STUDIO</span><button type="button" class="icon-btn immerse-close" data-close-dialog="immersive-dialog" aria-label="Close focus mode"><svg class="icon"><use href="#ic-x"/></svg></button></div>
       <div class="immersive-content"><span class="immersive-eyebrow">ONE TASK. ONE MOMENT.</span><h2 id="immersive-task">Your next big thing</h2><p id="immersive-project">Make some space to create.</p>
         <div class="immersive-timer"><svg viewBox="0 0 300 300" aria-hidden="true"><circle cx="150" cy="150" r="133" class="immerse-track"/><circle cx="150" cy="150" r="133" id="immerse-ring"/></svg><div class="immersive-time"><span>TIME REMAINING</span><strong id="immerse-digits" role="timer">00:00</strong><small id="immerse-status">Ready when you are</small></div></div>
-        <div class="immersive-controls"><button type="button" class="button button-accent" id="immerse-toggle">Start focusing</button><button type="button" class="button button-glass" id="immerse-extend">+15 min</button><button type="button" class="button button-glass" id="immerse-complete">Finish & journal</button></div>
+        <div class="immersive-controls"><button type="button" class="button button-accent" id="immerse-toggle">Start focusing</button><button type="button" class="button button-glass" id="immerse-extend">+15 min</button><button type="button" class="button button-glass" id="rescue-open">Rescue schedule ↗</button><button type="button" class="button button-glass" id="immerse-complete">Finish & journal</button></div>
         <div class="immersive-bottom"><button type="button" id="ambience-toggle" class="ambient-toggle">◖ ♪ ◗ &nbsp; Turn on gentle rain</button><span>SPACE → START / PAUSE &nbsp; · &nbsp; ESC → EXIT</span></div>
       </div>
     </div>
@@ -237,6 +238,13 @@
     <div id="issue-results" class="issue-results" aria-live="polite"></div>
   </dialog>
 
+  <dialog class="block-dialog" id="rescue-dialog" aria-labelledby="rescue-title">
+    <div class="dialog-head"><div><span class="eyebrow">WHEN CODING RUNS LONG</span><h2 id="rescue-title">Rescue your schedule</h2></div><button type="button" class="icon-btn dialog-close" id="rescue-close" aria-label="Close rescue dialog"><svg class="icon"><use href="#ic-x"/></svg></button></div>
+    <p class="journal-context">Extend this session, and automatically shift upcoming blocks on the same day. Nothing changes until you confirm.</p>
+    <label for="rescue-minutes">Extra minutes</label><select id="rescue-minutes"><option value="10">10 minutes</option><option value="15" selected>15 minutes</option><option value="30">30 minutes</option><option value="45">45 minutes</option><option value="60">60 minutes</option></select>
+    <div id="rescue-preview" class="issue-results" aria-live="polite"></div>
+    <div class="dialog-actions"><button class="button button-outline" id="rescue-cancel" type="button">Cancel</button><button class="button button-accent" id="rescue-apply" type="button">Apply changes →</button></div>
+  </dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
