@@ -15,6 +15,11 @@
 - Daily, weekday and weekly recurrence (up to 12 occurrences each time).
 - Existing day timeline, add/edit/delete controls and CSV schedule export.
 
+### 🚑 Smart Schedule Rescue
+- From immersive focus mode, preview an extra 10, 15, 30, 45 or 60 minutes.
+- Upcoming blocks shift only when needed, preserving existing gaps and preventing overlaps.
+- Review every change before applying. The engine refuses changes that exceed midnight or the per-session duration limit.
+
 ### 🗂 Project workspaces
 - Create, edit or delete named projects, choose an accent color and set focus goals.
 - Attach any work session to a project, view completed work and total tracked time.
