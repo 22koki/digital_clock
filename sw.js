@@ -1,5 +1,5 @@
-const CACHE="devtime-studio-v4";
-const ASSETS=["./","./index.html","./styles.css","./studio.css","./scheduler.js","./app.js","./studio.js","./rescue.js","./logbook-core.js","./logbook.js","./logbook.css","./favicon.svg"];
+const CACHE="devtime-studio-v5";
+const ASSETS=["./","./index.html","./styles.css","./studio.css","./scheduler.js","./app.js","./studio.js","./rescue.js","./logbook-core.js","./logbook.js","./logbook.css","./templates-core.js","./templates.js","./templates.css","./favicon.svg"];
 self.addEventListener("install",event=>{event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(ASSETS)).then(()=>self.skipWaiting()))});
 self.addEventListener("activate",event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()))});
 self.addEventListener("fetch",event=>{
