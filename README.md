@@ -28,6 +28,12 @@
 - Save any populated day as a custom reusable routine (up to 30 saved templates).
 - Backups include user-created templates for transfer between browsers.
 
+### 📊 Weekly Developer Report
+- A beautifully styled weekly recap with true logged focus time, completed work, active days, project momentum, dated bug resolutions and coding-journal highlights.
+- Browse earlier and upcoming weeks with the navigation controls.
+- Download a standalone, printable **HTML report** and use its **Print / Save as PDF** button, export a daily stats **CSV**, or copy a Markdown summary.
+- Weekly metrics exclude break sessions from focus time and do not misattribute undated bug resolutions.
+
 ### 🗂 Project workspaces
 - Create, edit or delete named projects, choose an accent color and set focus goals.
 - Attach any work session to a project, view completed work and total tracked time.
