@@ -118,7 +118,7 @@ catch(error){$("debug-attempt-error").textContent=error.message;$("debug-attempt
 $("debug-resolution-form").addEventListener("submit",event=>{
 event.preventDefault();const c=state.debugCases.find(x=>x.id===caseId);if(!c)return;
 const resolution=$("debug-resolution").value.trim();if(!resolution){$("debug-resolution-error").textContent="Describe the fix first.";$("debug-resolution-error").hidden=false;return}
-c.resolution=resolution;c.status="resolved";c.updatedAt=new Date().toISOString();save();renderStats();close("debug-detail-dialog");notify("Bug resolved — nicely done!");});
+c.resolution=resolution;c.status="resolved";c.updatedAt=new Date().toISOString();c.resolvedAt=c.resolvedAt||c.updatedAt;save();renderStats();window.DevtimeReportUI?.render();close("debug-detail-dialog");notify("Bug resolved — nicely done!");});
 $("debug-toggle-status").addEventListener("click",()=>{const c=state.debugCases.find(x=>x.id===caseId);if(!c)return;c.status=c.status==="paused"?"investigating":"paused";c.updatedAt=new Date().toISOString();save();renderStats();close("debug-detail-dialog");openCase(c.id)});
 $("debug-delete-case").addEventListener("click",()=>{const c=state.debugCases.find(x=>x.id===caseId);if(!c||!confirm("Delete this investigation and its experiments?"))return;state.debugCases=state.debugCases.filter(x=>x.id!==caseId);save();close("debug-detail-dialog");renderStats();notify("Investigation deleted")});
 $("debug-start-timer").addEventListener("click",()=>investigationTimer(state.debugCases.find(x=>x.id===caseId)));
