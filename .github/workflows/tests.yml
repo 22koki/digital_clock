@@ -16,5 +16,6 @@ jobs:
           node --check scheduler.js
           node --check studio.js
           node --check sw.js
+          node --check rescue.js
       - name: Schedule engine tests
         run: node --test tests/*.test.cjs
