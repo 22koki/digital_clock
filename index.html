@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="./logbook.css">
   <link rel="stylesheet" href="./templates.css">
   <link rel="stylesheet" href="./report.css">
+  <link rel="stylesheet" href="./reminders.css">
   <script src="./scheduler.js" defer></script>
   <script src="./app.js" defer></script>
   <script src="./rescue.js" defer></script>
@@ -28,6 +29,8 @@
   <script src="./templates.js" defer></script>
   <script src="./report-core.js" defer></script>
   <script src="./report.js" defer></script>
+  <script src="./reminders-core.js" defer></script>
+  <script src="./reminders.js" defer></script>
 </head>
 <body data-theme="dark">
   <svg class="sprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -69,8 +72,9 @@
         <a href="#templates" class="side-link"><svg class="icon"><use href="#ic-calendar"/></svg><span>Day templates</span><span class="nav-key">04</span></a>
         <a href="#projects" class="side-link"><svg class="icon"><use href="#ic-code"/></svg><span>Projects</span><span class="nav-key">05</span></a>
         <a href="#journal" class="side-link"><svg class="icon"><use href="#ic-edit"/></svg><span>Coding journal</span><span class="nav-key">06</span></a>
-        <a href="#report" class="side-link"><svg class="icon"><use href="#ic-trend"/></svg><span>Weekly report</span><span class="nav-key">07</span></a>
-        <a href="#insights" class="side-link"><svg class="icon"><use href="#ic-trend"/></svg><span>Insights</span><span class="nav-key">08</span></a>
+        <a href="#reminders" class="side-link"><svg class="icon"><use href="#ic-bell"/></svg><span>Reminders</span><span class="nav-key">07</span></a>
+        <a href="#report" class="side-link"><svg class="icon"><use href="#ic-trend"/></svg><span>Weekly report</span><span class="nav-key">08</span></a>
+        <a href="#insights" class="side-link"><svg class="icon"><use href="#ic-trend"/></svg><span>Insights</span><span class="nav-key">09</span></a>
       </nav>
       <div class="side-spacer"></div>
       <div class="side-inspo"><span class="little-stars">✳</span><h3>Build in your<br>own rhythm.</h3><p>A little focus goes a long way. Make today count.</p><div class="side-inspo-art" aria-hidden="true"><span class="art-circle one"></span><span class="art-circle two"></span><span class="art-line"></span></div></div>
@@ -83,7 +87,7 @@
         <div class="breadcrumb"><span>WORKSPACE</span><span class="crumb-sep">/</span><strong>Daily dashboard</strong></div>
         <div class="topbar-right">
           <span class="live-badge"><span class="live-dot"></span><span id="live-clock">--:--:--</span></span>
-          <button class="icon-btn top-icon" type="button" id="notification-button" title="Enable timer notifications" aria-label="Enable timer notifications"><svg class="icon"><use href="#ic-bell"/></svg></button>
+          <button class="icon-btn top-icon" type="button" id="notification-button" title="Open reminder preferences" aria-label="Open reminder preferences"><svg class="icon"><use href="#ic-bell"/></svg></button>
           <button class="icon-btn top-icon" type="button" id="theme-button" title="Switch color theme" aria-label="Switch color theme"><svg class="icon"><use href="#ic-moon"/></svg></button>
           <span class="avatar" aria-hidden="true">{"</>"}</span>
         </div>
@@ -246,6 +250,56 @@
         </section>
 
 <section class="studio-section report-section" id="report" aria-labelledby="report-heading"><div class="section-heading"><div><div class="eyebrow"><span class="asterisk">✳</span> YOUR WORK, MADE VISIBLE</div><h2 id="report-heading">The week you <em>built.</em></h2><p>A beautiful, evidence-based recap of your coding hours, projects, journal and solved bugs.</p></div><div class="report-controls"><button type="button" class="button button-outline" id="report-prev">← Previous week</button><button type="button" class="button button-outline" id="report-this">This week</button><button type="button" class="button button-outline" id="report-next">Next →</button></div></div><div class="report-page"><div class="report-hero"><span class="report-eyebrow">✳ DEVTIME / WEEKLY EDITION</span><h3>Another week.<br><em>More progress.</em></h3><p id="report-week-label">Your week at a glance.</p><span class="report-edition">THE BUILDER'S REPORT ↗</span></div><div class="report-body"><div id="report-metrics" class="report-metrics"></div><div class="report-columns"><article class="report-pane"><div class="report-pane-heading"><span>01 / TIME & FLOW</span><h4>Where your hours went.</h4></div><div id="report-bars" class="report-bars"></div><p class="report-note">Tracked time reflects recorded coding sessions, not estimated productivity.</p></article><article class="report-pane"><div class="report-pane-heading"><span>02 / PROJECT MOMENTUM</span><h4>What moved forward.</h4></div><div id="report-projects"></div></article></div><div class="report-columns"><article class="report-pane"><div class="report-pane-heading"><span>03 / WORK SHIPPED</span><h4>Completed sessions.</h4></div><div id="report-completed" class="report-feed"></div></article><article class="report-pane"><div class="report-pane-heading"><span>04 / THE STORY BEHIND THE CODE</span><h4>Wins, notes & solved bugs.</h4></div><div id="report-highlights" class="report-feed"></div></article></div><div class="report-export"><div><strong>Make your progress shareable.</strong><p>Save a styled HTML report (print to PDF), download raw numbers or copy your weekly standup.</p></div><div class="report-export-actions"><button class="button button-dark" type="button" id="report-download">Download report</button><button class="button button-outline" type="button" id="report-csv">Export CSV</button><button class="button button-outline" type="button" id="report-copy">Copy summary</button></div></div></div></div></section>
+
+        <section class="studio-section reminders-section" id="reminders" aria-labelledby="reminders-heading">
+          <div class="section-heading">
+            <div><div class="eyebrow"><span class="asterisk">✳</span> IN SYNC WITH YOUR DAY</div><h2 id="reminders-heading">Never miss <em>your moment.</em></h2><p>Gentle nudges for coding sessions, focus timers and the breaks that keep you going.</p></div>
+          </div>
+          <div class="reminder-hero">
+            <div class="reminder-hero-copy">
+              <span class="reminder-kicker"><span class="reminder-glimmer">✷</span> THE PERSONAL TIMEKEEPER</span>
+              <h3>Right task.<br><em>Right time.</em></h3>
+              <p>Devtime watches your planned sessions while the app is open and gives you a heads-up when it's time to build.</p>
+              <div class="reminder-hero-badges"><span><span class="indicator-on"></span> Browser-local</span><span>✦ Made for your rhythm</span></div>
+            </div>
+            <div class="reminder-hero-art" aria-hidden="true">
+              <div class="reminder-orbit outer"></div><div class="reminder-orbit inner"></div>
+              <div class="reminder-clock-face"><div class="reminder-face-caption">TIME TO FOCUS</div><div class="reminder-face-digits">10:30<span>AM</span></div><div class="reminder-face-progress"><i></i></div></div>
+              <span class="reminder-float-badge">✳ &nbsp; YOU'VE GOT THIS</span>
+            </div>
+          </div>
+          <div class="reminder-grid">
+            <article class="reminder-card" aria-labelledby="reminder-upcoming-title">
+              <div class="reminder-card-header"><span class="reminder-icon lavender"><svg class="icon"><use href="#ic-calendar"/></svg></span><div><span class="reminder-overline">01 / STAY ON TRACK</span><h3 id="reminder-upcoming-title">Upcoming sessions</h3></div></div>
+              <label class="reminder-switch-row" for="reminder-upcoming"><span><strong>Advance reminders</strong><small>Get a nudge before your next coding block.</small></span><input type="checkbox" id="reminder-upcoming" checked></label>
+              <label class="reminder-setting-label" for="reminder-lead">Remind me before a session</label>
+              <select id="reminder-lead" class="reminder-select"><option value="1">1 minute before</option><option value="5">5 minutes before</option><option value="10">10 minutes before</option><option value="15">15 minutes before</option><option value="30">30 minutes before</option><option value="60">1 hour before</option></select>
+              <label class="reminder-switch-row" for="reminder-at-start"><span><strong>At the start</strong><small>A final nudge when your block begins.</small></span><input type="checkbox" id="reminder-at-start" checked></label>
+              <label class="reminder-switch-row last" for="reminder-breaks"><span><strong>Include breaks</strong><small>Remember to recharge, too.</small></span><input type="checkbox" id="reminder-breaks" checked></label>
+            </article>
+            <article class="reminder-card" aria-labelledby="reminder-focus-title">
+              <div class="reminder-card-header"><span class="reminder-icon mint"><svg class="icon"><use href="#ic-clock"/></svg></span><div><span class="reminder-overline">02 / CELEBRATE PROGRESS</span><h3 id="reminder-focus-title">Focus & sounds</h3></div></div>
+              <label class="reminder-switch-row" for="reminder-finished"><span><strong>Session completion</strong><small>Be notified when your focus timer finishes.</small></span><input type="checkbox" id="reminder-finished" checked></label>
+              <label class="reminder-switch-row" for="reminder-sound"><span><strong>Gentle sound</strong><small>Play a soft chime when a timer or reminder fires.</small></span><input type="checkbox" id="reminder-sound" checked></label>
+              <label class="reminder-switch-row" for="reminder-quiet"><span><strong>Quiet hours</strong><small>Silence scheduled alerts during downtime.</small></span><input type="checkbox" id="reminder-quiet"></label>
+              <div id="reminder-quiet-range" class="reminder-time-pair" hidden><label for="reminder-quiet-from">From <input id="reminder-quiet-from" type="time" value="21:00"></label><label for="reminder-quiet-until">Until <input id="reminder-quiet-until" type="time" value="07:00"></label></div>
+              <button type="button" id="reminder-preview" class="reminder-test-button"><svg class="icon"><use href="#ic-spark"/></svg> Send a test reminder <span>↗</span></button>
+            </article>
+            <article class="reminder-card reminder-permission" aria-labelledby="reminder-desktop-title">
+              <div class="reminder-card-header"><span class="reminder-icon peach"><svg class="icon"><use href="#ic-bell"/></svg></span><div><span class="reminder-overline">03 / STAY IN THE LOOP</span><h3 id="reminder-desktop-title">Desktop notifications</h3></div></div>
+              <p>Get an operating-system notification when this page detects a scheduled reminder, where supported and permitted.</p>
+              <div id="reminder-permission-status" class="reminder-permission-status"><span class="indicator-on"></span><span>Checking your browser…</span></div>
+              <label class="reminder-switch-row" for="reminder-desktop"><span><strong>Send desktop alerts</strong><small>In-app reminders remain available without permission.</small></span><input type="checkbox" id="reminder-desktop" checked></label>
+              <button type="button" id="reminder-request" class="button button-dark reminder-permission-button"><svg class="icon"><use href="#ic-bell"/></svg> Enable browser alerts</button>
+              <p class="reminder-limitation">Reminders require this browser page to remain open. They are not background push notifications, and some systems may throttle inactive tabs.</p>
+            </article>
+          </div>
+          <div class="reminder-next">
+            <div class="reminder-next-heading"><div><span class="reminder-overline">A PEEK AT WHAT'S AHEAD</span><h3>Your next moments</h3></div><span id="reminder-next-count" class="reminder-next-count">0 upcoming</span></div>
+            <div id="reminder-next-list" class="reminder-next-list" aria-live="polite"></div>
+          </div>
+        </section>
+
         <section class="bottom-grid" id="insights" aria-labelledby="insights-heading">
           <article class="quick-card"><div class="eyebrow"><span class="asterisk">✳</span> SKIP THE SETUP</div><h2>Quick-add a <em>session.</em></h2><p>Build a balanced day with one click. Times are fitted around existing blocks.</p><div class="quick-options">
             <button type="button" class="quick-option" data-quick="code"><span class="quick-icon code-icon"><svg class="icon"><use href="#ic-code"/></svg></span><span><strong>Deep coding</strong><small>50 minutes</small></span><svg class="icon quick-plus"><use href="#ic-plus"/></svg></button>
